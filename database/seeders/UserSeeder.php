@@ -16,7 +16,8 @@ final class UserSeeder extends Seeder
             ->createOne([
                 'email' => 'admin@test.com',
                 'password' => Hash::make('Test123!'),
-            ]);
+            ])
+            ->assignRole('super_admin');
 
         User::factory()
             ->count(50)
