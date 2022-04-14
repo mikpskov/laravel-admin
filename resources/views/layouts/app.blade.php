@@ -32,9 +32,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
+                    <x-admin.nav></x-admin.nav>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

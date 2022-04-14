@@ -1,0 +1,16 @@
+.card {
+    .table-sm > :not(caption) > * > * {
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+
+    > .card-body {
+        > .table {
+            margin-bottom: 0;
+
+            > tbody > tr:last-child > td {
+                border-style: none;
+            }
+        }
+    }
+}
