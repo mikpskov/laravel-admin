@@ -30,6 +30,13 @@ final class StoreUserRequest extends FormRequest
             'password' => [
                 'required',
             ],
+            'role' => [
+                'nullable',
+                'integer',
+            ],
+            'permissions' => [
+                'array',
+            ],
         ];
     }
 }

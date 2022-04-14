@@ -28,6 +28,13 @@ final class UpdateUserRequest extends FormRequest
                 'email',
                 Rule::unique(User::class)->ignore($this->user),
             ],
+            'role' => [
+                'nullable',
+                'integer',
+            ],
+            'permissions' => [
+                'array',
+            ],
         ];
     }
 }

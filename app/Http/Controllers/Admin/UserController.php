@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 final class UserController extends Controller
 {
@@ -27,12 +29,22 @@ final class UserController extends Controller
     {
         return view('admin.users.edit', [
             'user' => null,
+            'roles' => Role::all(['id', 'name'])->pluck('name', 'id'),
+            'permissions' => Permission::all(['id', 'name'])->pluck('name', 'id'),
         ]);
     }
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        User::create($request->validated());
+        $user = new User($request->validated());
+
+        $user->syncPermissions(array_keys($request->get('permissions') ?: []));
+
+        if ($request->has('role')) {
+            $user->syncRoles($request->get('role'));
+        }
+
+        $user->save();
 
         return redirect()->route('admin.users.index');
     }
@@ -46,12 +58,20 @@ final class UserController extends Controller
     {
         return view('admin.users.edit', [
             'user' => $user,
+            'roles' => Role::all(['id', 'name'])->pluck('name', 'id'),
+            'permissions' => Permission::all(['id', 'name'])->pluck('name', 'id'),
         ]);
     }
 
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $user->update($request->validated());
+
+        $user->syncPermissions(array_keys($request->get('permissions') ?: []));
+
+        if ($request->has('role')) {
+            $user->syncRoles($request->get('role'));
+        }
 
         return redirect()->route('admin.users.index');
     }

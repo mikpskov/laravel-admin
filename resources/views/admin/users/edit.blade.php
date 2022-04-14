@@ -26,6 +26,25 @@
                         <div class="mb-3">
                             <x-admin.input name="password" label="{{ __('Password') }}" type="password"/>
                         </div>
+
+                        <div class="mb-3">
+                            <x-admin.select
+                                name="role"
+                                label="{{ __('Role') }}"
+                                :options="$roles"
+                                :selected="$user?->getRole()?->id"
+                                empty="{{ __('No role') }}"
+                            />
+                        </div>
+
+                        <div>
+                            <x-admin.checkbox-group
+                                name="permissions"
+                                label="{{ __('Permissions') }}"
+                                :items="$permissions"
+                                :selected="$user?->permissions->pluck('id')"
+                            />
+                        </div>
                     </main>
 
                     <footer class="card-footer text-end">
