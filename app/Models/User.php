@@ -50,6 +50,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The number of models to return for pagination.
+     *
+     * @var int
+     */
+    protected $perPage = 20;
+
     protected function password(): Attribute
     {
         return Attribute::make(

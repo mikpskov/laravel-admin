@@ -83,8 +83,31 @@
                         </tbody>
                     </table>
                 </div>
+
+                <footer class="card-footer d-flex justify-content-between align-items-center">
+                    <div>
+                        <x-admin.select
+                            name="perPage"
+                            :options="[20 => 20, 50 => 50, 100 => 100]"
+                            selected="{{ $perPage }}"
+                        />
+                    </div>
+
+                    {{ $items->links() }}
+                </footer>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+(() => {
+    document.getElementById('perPage').addEventListener('change', function() {
+        document.cookie = `users_perPage=${this.value}`;
+        window.location.replace("{{ route('admin.users.index') }}");
+    });
+})()
+</script>
+@endpush

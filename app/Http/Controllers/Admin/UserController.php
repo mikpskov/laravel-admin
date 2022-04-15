@@ -10,18 +10,22 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 final class UserController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $headers = ['id', 'name', 'email'];
 
+        $perPage = $request->cookie('users_perPage');
+
         return view('admin.users.index', [
             'headers' => $headers,
-            'items' => User::all($headers),
+            'items' => User::paginate($perPage, $headers),
+            'perPage' => $perPage ?? (new User())->getPerPage(),
         ]);
     }
 
