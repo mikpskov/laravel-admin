@@ -11,7 +11,6 @@
 
                     <header class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">{{ $user === null ? __('Create user') : __('Edit user') }}</h5>
-                        <a href="{{ route('admin.users.index') }}" class="link-secondary" style="padding: .375rem 0"><i class="bi-x-lg"></i></a>
                     </header>
 
                     <main class="card-body">

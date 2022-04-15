@@ -4,7 +4,11 @@
         padding-right: .75rem;
     }
 
-    > .card-body {
+    .card-header, .card-footer {
+        height: 55px;
+    }
+
+    .card-body {
         > .table {
             margin-bottom: 0;
 
