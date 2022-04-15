@@ -8,7 +8,10 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">{{ __('Users') }}</h5>
                     {{-- <x-admin.select name="role" :options="['2' => 'admin', '3' => 'editor']"/> --}}
-                    <a type="button" class="btn btn-primary" href="{{ route('admin.users.create') }}">{{ __('Add user') }}</a>
+
+                    @can('users.create')
+                        <a type="button" class="btn btn-primary" href="{{ route('admin.users.create') }}">{{ __('Add user') }}</a>
+                    @endcan
                 </div>
 
                 <div class="card-body p-0">
@@ -30,48 +33,51 @@
                                 @foreach($headers as $header)
                                     <td>{{ $item->{$header} }}</td>
                                 @endforeach
-                                <td class="text-end">
-                                    <a
-                                        href="#"
-                                        class="link-secondary"
-                                        type="button"
-                                        id="actions-{{ $item->id }}"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
-                                        <i class="bi-three-dots-vertical"></i>
-                                    </a>
 
-                                    <ul class="dropdown-menu" aria-labelledby="actions-{{ $item->id }}">
-                                        @can('users.update')
-                                            <li>
-                                                <a
-                                                    class="dropdown-item"
-                                                    href="{{ route('admin.users.edit', $item) }}"
-                                                >
-                                                    {{ __('Edit') }}
-                                                </a>
-                                            </li>
-                                        @endcan
+                                @canany(['users.update', 'users.delete'])
+                                    <td class="text-end">
+                                        <a
+                                            href="#"
+                                            class="link-secondary"
+                                            type="button"
+                                            id="actions-{{ $item->id }}"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                        >
+                                            <i class="bi-three-dots-vertical"></i>
+                                        </a>
 
-                                        {{--
-                                        @can('users.status')
-                                            <li><a class="dropdown-item" href="#">{{ __('Disable') }}</a></li>
-                                        @endcan
-                                        --}}
+                                        <ul class="dropdown-menu" aria-labelledby="actions-{{ $item->id }}">
+                                            @can('users.update')
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="{{ route('admin.users.edit', $item) }}"
+                                                    >
+                                                        {{ __('Edit') }}
+                                                    </a>
+                                                </li>
+                                            @endcan
 
-                                        @can('users.delete')
-                                            <li>
-                                                <form action="{{ route('admin.users.destroy', $item) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
+                                            {{--
+                                            @can('users.status')
+                                                <li><a class="dropdown-item" href="#">{{ __('Disable') }}</a></li>
+                                            @endcan
+                                            --}}
 
-                                                    <button class="dropdown-item">{{ __('Delete') }}</button>
-                                                </form>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </td>
+                                            @can('users.delete')
+                                                <li>
+                                                    <form action="{{ route('admin.users.destroy', $item) }}" method="POST">
+                                                        @method('DELETE')
+                                                        @csrf
+
+                                                        <button class="dropdown-item">{{ __('Delete') }}</button>
+                                                    </form>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </td>
+                                @endcanany()
                             </tr>
                         @endforeach
                         </tbody>

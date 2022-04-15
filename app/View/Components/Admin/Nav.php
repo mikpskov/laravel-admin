@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\View\Components\Admin;
 
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -30,7 +31,7 @@ final class Nav extends Component
 
     private function getDefaultItems(): array
     {
-        return [
+        $items = [
             [
                 'name' => __('Home'),
                 'link' => route('home'),
@@ -38,7 +39,23 @@ final class Nav extends Component
             [
                 'name' => __('Users'),
                 'link' => route('admin.users.index'),
+                'permission' => 'users.viewAny',
             ],
         ];
+
+        /** @var User|null $user */
+        $user = auth()->user();
+
+        return array_filter($items, function (array $item) use ($user) {
+            if (!array_key_exists('permission', $item)) {
+                return true;
+            }
+
+            if ($user === null || $user->cannot($item['permission'])) {
+                return false;
+            }
+
+            return true;
+        });
     }
 }
