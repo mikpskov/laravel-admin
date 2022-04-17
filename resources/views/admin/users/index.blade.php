@@ -7,7 +7,10 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">{{ __('Users') }}</h5>
-                    {{-- <x-admin.select name="role" :options="['2' => 'admin', '3' => 'editor']"/> --}}
+
+                    <form method="get">
+                        <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
+                    </form>
 
                     @can('users.create')
                         <a type="button" class="btn btn-primary" href="{{ route('admin.users.create') }}">{{ __('Add user') }}</a>

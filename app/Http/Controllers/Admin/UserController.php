@@ -18,14 +18,22 @@ final class UserController extends Controller
 {
     public function index(Request $request): View
     {
+        $users = User::query();
+
+        if ($search = $request->get('search')) {
+            $users->where('name', 'like', "%$search%");
+            $users->orWhere('email', 'like', "%$search%");
+        }
+
         $headers = ['id', 'name', 'email'];
 
         $perPage = $request->cookie('users_perPage');
 
         return view('admin.users.index', [
             'headers' => $headers,
-            'items' => User::paginate($perPage, $headers),
+            'items' => $users->paginate($perPage, $headers)->appends($request->except('page')),
             'perPage' => $perPage ?? (new User())->getPerPage(),
+            'search' => $search ?? '',
         ]);
     }
 

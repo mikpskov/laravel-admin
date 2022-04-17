@@ -16,10 +16,10 @@ final class Input extends Component
         public ?string $value = null,
         public ?string $type = null,
         public ?string $label = null,
+        public ?string $placeholder = null,
     ) {
         $this->value ??= old($name) ?? $model?->{$name} ?? '';
         $this->type ??= 'text';
-        $this->label ??= ucfirst($name);
     }
 
     public function render(): View
