@@ -16,6 +16,11 @@ use Spatie\Permission\Models\Role;
 
 final class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     public function index(Request $request): View
     {
         $users = User::query();
