@@ -1,0 +1,15 @@
+.table-actions {
+    tr {
+        td.actions-column {
+            width: 5%;
+
+            .actions-button {
+                display: none;
+            }
+        }
+
+        &:hover > td > a.actions-button {
+            display: inline-block;
+        }
+    }
+}

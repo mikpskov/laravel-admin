@@ -18,13 +18,13 @@
                 </div>
 
                 <div class="card-body p-0">
-                    <table class="table table-sm table-hover">
+                    <table class="table table-sm table-actions">
                         {{--
                         <thead>
                         <tr>
                             @foreach($headers as $header)
                                 <th>{{ $header }}</th>
-                            @endforeach
+                            @endforeachgs
                             <th></th>
                         </tr>
                         </thead>
@@ -38,10 +38,10 @@
                                 @endforeach
 
                                 @canany(['users.update', 'users.delete'])
-                                    <td class="text-end">
+                                    <td class="text-end actions-column">
                                         <a
                                             href="#"
-                                            class="link-secondary"
+                                            class="link-secondary actions-button"
                                             type="button"
                                             id="actions-{{ $item->id }}"
                                             data-bs-toggle="dropdown"
