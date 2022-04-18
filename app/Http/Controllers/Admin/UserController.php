@@ -39,6 +39,8 @@ final class UserController extends Controller
             'items' => $users->paginate($perPage, $headers)->appends($request->except('page')),
             'perPage' => $perPage ?? (new User())->getPerPage(),
             'search' => $search ?? '',
+            'title' => __('Users'),
+            'createUrl' => route('admin.users.create'),
         ]);
     }
 

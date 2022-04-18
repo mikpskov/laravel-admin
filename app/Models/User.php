@@ -68,4 +68,14 @@ class User extends Authenticatable
     {
         return $this->roles->isEmpty() ? null : $this->roles[0];
     }
+
+    public function getEditLink(): string
+    {
+        return route('admin.users.edit', $this);
+    }
+
+    public function getRemoveLink(): string
+    {
+        return route('admin.users.destroy', $this);
+    }
 }

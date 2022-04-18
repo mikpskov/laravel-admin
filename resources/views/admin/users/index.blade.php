@@ -6,30 +6,19 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">{{ __('Users') }}</h5>
+                    <h5 class="mb-0">{{ $title }}</h5>
 
                     <form method="get">
                         <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
                     </form>
 
                     @can('users.create')
-                        <a type="button" class="btn btn-primary" href="{{ route('admin.users.create') }}">{{ __('Add user') }}</a>
+                        <a type="button" class="btn btn-primary" href="{{ $createUrl }}">{{ __('Add') }}</a>
                     @endcan
                 </div>
 
                 <div class="card-body p-0">
                     <table class="table table-sm table-actions">
-                        {{--
-                        <thead>
-                        <tr>
-                            @foreach($headers as $header)
-                                <th>{{ $header }}</th>
-                            @endforeachgs
-                            <th></th>
-                        </tr>
-                        </thead>
-                        --}}
-
                         <tbody>
                         @foreach($items as $item)
                             <tr>
@@ -55,22 +44,16 @@
                                                 <li>
                                                     <a
                                                         class="dropdown-item"
-                                                        href="{{ route('admin.users.edit', $item) }}"
+                                                        href="{{ $item->getEditLink() }}"
                                                     >
                                                         {{ __('Edit') }}
                                                     </a>
                                                 </li>
                                             @endcan
 
-                                            {{--
-                                            @can('users.status')
-                                                <li><a class="dropdown-item" href="#">{{ __('Disable') }}</a></li>
-                                            @endcan
-                                            --}}
-
                                             @can('users.delete')
                                                 <li>
-                                                    <form action="{{ route('admin.users.destroy', $item) }}" method="POST">
+                                                    <form action="{{ $item->getRemoveLink() }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
 
