@@ -36,7 +36,7 @@
                             />
                         </div>
 
-                        <div>
+                        <div class="permissions-block">
                             <x-admin.checkbox-group
                                 name="permissions"
                                 label="{{ __('Permissions') }}"
@@ -56,3 +56,17 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+(() => {
+    const $select = document.getElementById('role');
+
+    $select.addEventListener('change', function() {
+        document.querySelector(".permissions-block").style.display = this.value ? '' : 'none';
+    });
+
+    $select.dispatchEvent(new Event('change'));
+})()
+</script>
+@endpush
