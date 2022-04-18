@@ -35,6 +35,10 @@ final class UpdateUserRequest extends FormRequest
             'permissions' => [
                 'array',
             ],
+            'permissions.*' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

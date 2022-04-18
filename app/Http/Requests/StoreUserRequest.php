@@ -37,6 +37,10 @@ final class StoreUserRequest extends FormRequest
             'permissions' => [
                 'array',
             ],
+            'permissions.*' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }
