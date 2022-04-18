@@ -1,5 +1,8 @@
 @isset($label)
-    <label class="form-label">{{ $label }}</label>
+    <div class="d-flex justify-content-between align-items-center">
+        <label class="form-label">{{ $label }}</label>
+        <a href="#" id="toggle-button">{{ __('Select all') }}</a>
+    </div>
 @endisset
 
 <div class="card card-body @error($name) is-invalid border-danger @enderror">
@@ -21,3 +24,28 @@
 @error($name)
     <span class="invalid-feedback" role="alert">{{ $message }}</span>
 @enderror
+
+@push('scripts')
+<script>
+(() => {
+    const $toggleButton = document.getElementById('toggle-button')
+    const checkboxes = document.querySelectorAll(".form-check-input")
+
+    $toggleButton.addEventListener('click', event => {
+        const $button = event.target
+        const isSelected = $button.dataset.selected !== undefined
+
+        event.preventDefault()
+        checkboxes.forEach($checkbox => $checkbox.checked = !isSelected)
+
+        isSelected
+            ? delete $button.dataset.selected
+            : $button.dataset.selected = 'selected'
+    })
+
+    checkboxes.forEach($checkbox => $checkbox.addEventListener('change', () => {
+        delete $toggleButton.dataset.selected
+    }))
+})()
+</script>
+@endpush
