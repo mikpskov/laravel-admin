@@ -9,14 +9,14 @@
                 href="{{ $paginator->previousPageUrl() }}"
                 class="btn btn-link link-secondary{{ $paginator->onFirstPage() ? ' disabled' : '' }}"
             >
-                <i class="bi-arrow-left"></i>
+                <i class="bi bi-chevron-left"></i>
             </a>
 
             <a
                 href="{{ $paginator->nextPageUrl() }}"
                 class="btn btn-link link-secondary{{ $paginator->hasMorePages() ? '' : ' disabled' }}"
             >
-                <i class="bi-arrow-right"></i>
+                <i class="bi bi-chevron-right"></i>
             </a>
         </nav>
     </div>
