@@ -13,7 +13,7 @@ final class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->can('users.viewAny');
+        return $user->can('users.view_any');
     }
 
     public function view(User $user, User $model): bool
