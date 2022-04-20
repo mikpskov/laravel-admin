@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\Traits\HasPublications;
+use App\View\DropdownItem;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -55,18 +56,30 @@ final class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getPublishLink(): string
+    public function getActions(): array
     {
-        return route('admin.posts.publish', $this);
-    }
+        /** @var User|null $user */
+        $user = auth()->user();
 
-    public function getEditLink(): string
-    {
-        return route('admin.posts.edit', $this);
-    }
-
-    public function getRemoveLink(): string
-    {
-        return route('admin.posts.destroy', $this);
+        return [
+            new DropdownItem(
+                __('Edit'),
+                route('admin.posts.edit', $this),
+                $user?->can('update', $this),
+                'GET',
+            ),
+            new DropdownItem(
+                $this->isPublished() ? __('Unpublish') : __('Publish'),
+                route('admin.posts.publish', $this),
+                $user?->can('publish', $this),
+                $this->isPublished() ? 'DELETE' : 'PATCH',
+            ),
+            new DropdownItem(
+                __('Delete'),
+                route('admin.posts.destroy', $this),
+                $user?->can('delete', $this),
+                'DELETE',
+            ),
+        ];
     }
 }

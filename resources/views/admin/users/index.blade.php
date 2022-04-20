@@ -39,29 +39,7 @@
                                             <i class="bi-three-dots-vertical"></i>
                                         </a>
 
-                                        <ul class="dropdown-menu" aria-labelledby="actions-{{ $item->id }}">
-                                            @can('update', $item)
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="{{ $item->getEditLink() }}"
-                                                    >
-                                                        {{ __('Edit') }}
-                                                    </a>
-                                                </li>
-                                            @endcan
-
-                                            @can('delete', $item)
-                                                <li>
-                                                    <form action="{{ $item->getRemoveLink() }}" method="POST">
-                                                        @method('DELETE')
-                                                        @csrf
-
-                                                        <button class="dropdown-item">{{ __('Delete') }}</button>
-                                                    </form>
-                                                </li>
-                                            @endcan
-                                        </ul>
+                                        <x-admin.dropdown name="actions-{{ $item->id }}" :items="$item->getActions()"/>
                                     @endcanany
                                 </td>
                             </tr>

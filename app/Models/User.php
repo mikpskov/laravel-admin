@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\View\DropdownItem;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -75,13 +76,23 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function getEditLink(): string
+    public function getActions(): array
     {
-        return route('admin.users.edit', $this);
-    }
+        /** @var User|null $user */
+        $user = auth()->user();
 
-    public function getRemoveLink(): string
-    {
-        return route('admin.users.destroy', $this);
+        return [
+            new DropdownItem(
+                __('Edit'),
+                route('admin.users.edit', $this),
+                $user?->can('update', $this),
+            ),
+            new DropdownItem(
+                __('Delete'),
+                route('admin.users.destroy', $this),
+                $user?->can('delete', $this),
+                'DELETE',
+            ),
+        ];
     }
 }
