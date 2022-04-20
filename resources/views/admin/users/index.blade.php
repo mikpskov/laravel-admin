@@ -12,7 +12,7 @@
                         <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
                     </form>
 
-                    @can('users.create')
+                    @can('create', \App\Models\User::class)
                         <a type="button" class="btn btn-primary" href="{{ $createUrl }}">{{ __('Add') }}</a>
                     @endcan
                 </div>
@@ -26,8 +26,8 @@
                                     <td>{{ $item->{$header} }}</td>
                                 @endforeach
 
-                                @canany(['users.update', 'users.delete'])
-                                    <td class="text-end actions-column">
+                                <td class="text-end actions-column">
+                                    @canany(['update', 'delete'], $item)
                                         <a
                                             href="#"
                                             class="link-secondary actions-button"
@@ -40,7 +40,7 @@
                                         </a>
 
                                         <ul class="dropdown-menu" aria-labelledby="actions-{{ $item->id }}">
-                                            @can('users.update')
+                                            @can('update', $item)
                                                 <li>
                                                     <a
                                                         class="dropdown-item"
@@ -51,7 +51,7 @@
                                                 </li>
                                             @endcan
 
-                                            @can('users.delete')
+                                            @can('delete', $item)
                                                 <li>
                                                     <form action="{{ $item->getRemoveLink() }}" method="POST">
                                                         @method('DELETE')
@@ -62,8 +62,8 @@
                                                 </li>
                                             @endcan
                                         </ul>
-                                    </td>
-                                @endcanany()
+                                    @endcanany
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
