@@ -6,15 +6,19 @@ namespace App\View\Components\Admin;
 
 use App\Models\Post;
 use App\Models\User;
+use App\View\NavItem;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 final class Nav extends Component
 {
+    /**
+     * @param array<NavItem> $items
+     */
     public function __construct(
         public ?array $items = null,
     ) {
-        $this->items ??= $this->getDefaultItems();
+        $this->setItems($items ?? $this->getDefaultItems());
     }
 
     public function render(): View
@@ -22,37 +26,40 @@ final class Nav extends Component
         return view('admin.components.nav');
     }
 
-    /**
-     * @param array<string, string> $item
-     */
-    public function isActive(array $item): bool
+    public function isActive(NavItem $item): bool
     {
-        return url()->current() === $item['link'];
+        return url()->current() === $item->link;
     }
 
+    private function setItems(array $items): void
+    {
+        $this->items = array_filter($items, fn(NavItem $item) => $item->show);
+    }
+
+    /**
+     * @return array<NavItem>
+     */
     private function getDefaultItems(): array
     {
         /** @var User|null $user */
         $user = auth()->user();
 
-        $items = [
-            [
-                'name' => __('Home'),
-                'link' => route('home'),
-                'permission' => true,
-            ],
-            [
-                'name' => __('Users'),
-                'link' => route('admin.users.index'),
-                'permission' => $user?->can('viewAny', User::class),
-            ],
-            [
-                'name' => __('Posts'),
-                'link' => route('admin.posts.index'),
-                'permission' => $user?->can('viewAny', Post::class),
-            ],
+        return [
+            new NavItem(
+                __('Home'),
+                route('home'),
+                true,
+            ),
+            new NavItem(
+                __('Users'),
+                route('admin.users.index'),
+                $user?->can('viewAny', User::class),
+            ),
+            new NavItem(
+                __('Posts'),
+                route('admin.posts.index'),
+                $user?->can('viewAny', Post::class),
+            ),
         ];
-
-        return array_filter($items, fn(array $item) => $item['permission'] ?? false);
     }
 }
