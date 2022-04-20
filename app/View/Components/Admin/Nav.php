@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\View\Components\Admin;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -44,6 +45,11 @@ final class Nav extends Component
                 'name' => __('Users'),
                 'link' => route('admin.users.index'),
                 'permission' => $user?->can('viewAny', User::class),
+            ],
+            [
+                'name' => __('Posts'),
+                'link' => route('admin.posts.index'),
+                'permission' => $user?->can('viewAny', Post::class),
             ],
         ];
 
