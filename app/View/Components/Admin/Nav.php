@@ -31,31 +31,22 @@ final class Nav extends Component
 
     private function getDefaultItems(): array
     {
+        /** @var User|null $user */
+        $user = auth()->user();
+
         $items = [
             [
                 'name' => __('Home'),
                 'link' => route('home'),
+                'permission' => true,
             ],
             [
                 'name' => __('Users'),
                 'link' => route('admin.users.index'),
-                'permission' => 'users.viewAny',
+                'permission' => $user?->can('viewAny', User::class),
             ],
         ];
 
-        /** @var User|null $user */
-        $user = auth()->user();
-
-        return array_filter($items, function (array $item) use ($user) {
-            if (!array_key_exists('permission', $item)) {
-                return true;
-            }
-
-            if ($user === null || $user->cannot($item['permission'])) {
-                return false;
-            }
-
-            return true;
-        });
+        return array_filter($items, fn(array $item) => $item['permission'] ?? false);
     }
 }
