@@ -6,7 +6,7 @@
     <title>App</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="max-w-5xl mx-auto px-4 pb-10 pt-10 sm:px-6 md:px-8 xl:px-12 xl:max-w-6xl text-gray-600">
 @yield('content')
 </body>
 </html>
