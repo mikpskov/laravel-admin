@@ -47,7 +47,7 @@ final class Nav extends Component
         return [
             new NavItem(
                 __('Home'),
-                route('home'),
+                route('posts.index'),
                 true,
             ),
             new NavItem(
