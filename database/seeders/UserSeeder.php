@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 final class UserSeeder extends Seeder
 {
+    public const COUNT = 50;
+
     public function run(): void
     {
         User::factory()
@@ -20,7 +22,7 @@ final class UserSeeder extends Seeder
             ->assignRole('super_admin');
 
         User::factory()
-            ->count(50)
+            ->count(self::COUNT - 1)
             ->create();
     }
 }

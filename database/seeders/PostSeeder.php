@@ -9,10 +9,12 @@ use Illuminate\Database\Seeder;
 
 final class PostSeeder extends Seeder
 {
+    public const COUNT = 200;
+
     public function run(): void
     {
         Post::factory()
-            ->count(100)
+            ->count(self::COUNT)
             ->create();
     }
 }
