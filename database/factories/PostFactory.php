@@ -10,11 +10,15 @@ final class PostFactory extends Factory
 {
     public function definition(): array
     {
+        $createdAt = $this->faker->dateTimeBetween('-1 month');
+
         return [
             'author_id' => random_int(1, 50),  // todo: Post::factory(),
             'title' => rtrim($this->faker->sentence, '.'),
-            'body' => $this->faker->paragraph,
+            'body' => $this->faker->text(2000),
             'published_at' => $this->faker->randomElement([now(), null]),
+            'created_at' => $createdAt,
+            'updated_at' => $createdAt,
         ];
     }
 }
