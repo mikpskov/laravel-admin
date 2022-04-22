@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasPublications;
 use App\View\DropdownItem;
 use Carbon\CarbonInterface;
@@ -26,6 +27,7 @@ final class Post extends Model
 {
     use HasFactory;
     use HasPublications;
+    use HasLikes;
 
     protected $fillable = [
         'title',

@@ -17,6 +17,8 @@ final class PostController extends Controller
 
         $items = Post::query()
             ->with('author:id,name')
+            ->withCount('likes')
+            ->joinLikedBy($request->user())
             ->published()
             ->latest();
 

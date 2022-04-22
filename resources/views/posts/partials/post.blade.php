@@ -41,9 +41,9 @@
                     <span>55</span>
                 </a>
             @else
-                <button class="flex items-center like-button" title="{{ __('Likes') }}">
-                    <x-icon.heart class="mr-2"/>
-                    <span class="like-counter">55</span>
+                <button class="flex items-center like-button @if($item->liked) active @endif" title="{{ __('Likes') }}">
+                    <x-icon.heart class="mr-2" filled="{{ $item->liked }}"/>
+                    <span class="like-counter">{{ $item->likes_count }}</span>
                 </button>
             @endguest
 
