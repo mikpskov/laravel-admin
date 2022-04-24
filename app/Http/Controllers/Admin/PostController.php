@@ -22,7 +22,6 @@ final class PostController extends Controller
     public function index(Request $request): View
     {
         $items = Post::query()
-            ->with('author:id,name')
             ->latest();
 
         if ($request->user()->cannot('posts.view_any')) {

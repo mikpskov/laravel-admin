@@ -16,7 +16,6 @@ final class PostController extends Controller
         Paginator::defaultView('posts.partials.pagination');
 
         $items = Post::query()
-            ->with('author:id,name')
             ->withCount('likes')
             ->joinLikedBy($request->user())
             ->published()

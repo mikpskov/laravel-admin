@@ -29,6 +29,10 @@ final class Post extends Model
     use HasPublications;
     use HasLikes;
 
+    protected $with = [
+        'author',
+    ];
+
     protected $fillable = [
         'title',
         'body',
