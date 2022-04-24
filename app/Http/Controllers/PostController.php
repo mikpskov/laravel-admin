@@ -37,10 +37,14 @@ final class PostController extends Controller
         ]);
     }
 
-    public function show(Post $post): View
+    public function show(Request $request, int $id): View
     {
+        $post = Post::query()
+            ->withCount('likes')
+            ->joinLikedBy($request->user());
+
         return view('posts.show', [
-            'item' => $post,
+            'item' => $post->findOrFail($id),
         ]);
     }
 }

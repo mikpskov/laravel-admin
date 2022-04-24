@@ -61,7 +61,7 @@ trait HasLikes
 
         return $query->leftJoin($table, fn(JoinClause $join) => $join
             ->on("{$this->getTable()}.id", '=', "{$table}.likeable_id")
-            ->where("{$table}.likeable_type", '=', $this::class)
+            ->where("{$table}.likeable_type", $this::class)
             ->where("{$table}.user_id", $user->id)
         )->selectRaw("{$table}.user_id > 0 as {$alias}");
     }
