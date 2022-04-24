@@ -52,9 +52,9 @@ final class Post extends Model
         }
     }
 
-    public function scopeByAuthor(Builder $query, User $user): Builder
+    public function scopeByAuthorId(Builder $query, int $authorId): Builder
     {
-        return $query->where('author_id', $user->id);
+        return $query->where('author_id', $authorId);
     }
 
     public function author(): BelongsTo

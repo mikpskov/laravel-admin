@@ -25,7 +25,11 @@ final class PostController extends Controller
             ->latest();
 
         if ($request->user()->cannot('posts.view_any')) {
-            $items->byAuthor($request->user());
+            $items->byAuthorId($request->user()->getKey());
+        }
+
+        if ($authorId = $request->get('author')) {
+            $items->byAuthorId($authorId);
         }
 
         if ($search = $request->get('search')) {

@@ -22,9 +22,10 @@
                         <tbody>
                         @foreach($items as $item)
                             <tr>
-                                @foreach($headers as $header)
-                                    <td>{{ $item->{$header} }}</td>
-                                @endforeach
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->email }}</td>
+                                <td><a href="{{ route('admin.posts.index', ['author' => $item->id]) }}" title="{{ __('Posts') }}">{{ $item->posts_count }}</a></td>
 
                                 <td class="text-end actions-column">
                                     @canany(['update', 'delete'], $item)
