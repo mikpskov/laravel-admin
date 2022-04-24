@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\Like;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
 use App\Models\Post;
-use Illuminate\Support\Facades\DB;
 
 final class LikeSeeder extends Seeder
 {
@@ -19,14 +19,14 @@ final class LikeSeeder extends Seeder
     public function run(): void
     {
         $now = now();
-        $data = [];
-        for ($postId = 1; $postId <= PostSeeder::COUNT; ++$postId) {
+        $items = [];
+        foreach (range(1, PostSeeder::COUNT) as $postId) {
             $this->faker->unique(true);
 
-            for ($i = 1; $i <= $this->faker->numberBetween(1, UserSeeder::COUNT); ++$i) {
+            foreach (range(1, $this->faker->numberBetween(1, UserSeeder::COUNT)) as $index) {
                 $userId = $this->faker->unique()->numberBetween(1, UserSeeder::COUNT);
 
-                $data[] = [
+                $items[] = [
                     'user_id' => $userId,
                     'likeable_id' => $postId,
                     'likeable_type' => Post::class,
@@ -35,6 +35,6 @@ final class LikeSeeder extends Seeder
             }
         }
 
-        DB::table('likes')->insert($data);
+        Like::insert($items);
     }
 }
