@@ -16,8 +16,7 @@ final class PostController extends Controller
         Paginator::defaultView('posts.partials.pagination');
 
         $items = Post::query()
-            ->withCount('likes')
-            ->joinLikedBy($request->user())
+            ->withLikes($request->user())
             ->published()
             ->latest();
 
@@ -38,12 +37,13 @@ final class PostController extends Controller
 
     public function show(Request $request, int $id): View
     {
+        /** @var Post $post */
         $post = Post::query()
-            ->withCount('likes')
-            ->joinLikedBy($request->user());
+            ->withLikes($request->user())
+            ->findOrFail($id);
 
         return view('posts.show', [
-            'item' => $post->findOrFail($id),
+            'item' => $post,
         ]);
     }
 }
