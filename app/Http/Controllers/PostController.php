@@ -42,8 +42,14 @@ final class PostController extends Controller
             ->withLikes($request->user())
             ->findOrFail($id);
 
+        $comments = $post->comments()
+            ->withLikes($request->user())
+            ->approved()
+            ->get();
+
         return view('posts.show', [
             'item' => $post,
+            'comments' => $comments,
         ]);
     }
 }

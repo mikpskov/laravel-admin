@@ -12,6 +12,7 @@ final class LikeController extends Controller
 {
     private const MAP = [
         'posts' => \App\Models\Post::class,
+        'comments' => \App\Models\Comment::class,
     ];
 
     public function store(Request $request, string $type, int $id): RedirectResponse|JsonResponse

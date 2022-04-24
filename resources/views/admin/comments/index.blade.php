@@ -11,25 +11,19 @@
                     <form method="get">
                         <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
                     </form>
-
-                    @can('create', \App\Models\User::class)
-                        <a type="button" class="btn btn-primary" href="{{ $createUrl }}">{{ __('Add') }}</a>
-                    @endcan
                 </div>
 
                 <div class="card-body p-0">
                     <table class="table table-sm table-actions">
                         <tbody>
                         @foreach($items as $item)
-                            <tr>
+                            <tr @if(!$item->isApproved()) class="table-secondary" @endif>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->email }}</td>
-                                <td><a href="{{ route('admin.posts.index', ['author' => $item->id]) }}" title="{{ __('Posts') }}">{{ $item->posts_count }}</a></td>
-                                <td><a href="{{ route('admin.comments.index', ['author' => $item->id]) }}" title="{{ __('Comments') }}">{{ $item->comments_count }}</a></td>
+                                <td>{{ $item->author->name }}</td>
+                                <td>{{ $item->post->title }}</td>
 
                                 <td class="text-end actions-column">
-                                    @canany(['update', 'delete'], $item)
+                                    @canany(['approve', 'delete'], $item)
                                         <a
                                             href="#"
                                             class="link-secondary actions-button"
@@ -71,8 +65,8 @@
 <script>
 (() => {
     document.getElementById('perPage').addEventListener('change', function() {
-        document.cookie = `users_perPage=${this.value}`;
-        window.location.replace("{{ route('admin.users.index') }}");
+        document.cookie = `comments_perPage=${this.value}`;
+        window.location.replace("{{ route('admin.comments.index') }}");
     });
 })()
 </script>

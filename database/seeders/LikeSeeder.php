@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Like;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
@@ -18,9 +19,15 @@ final class LikeSeeder extends Seeder
 
     public function run(): void
     {
+        $this->addLikes(PostSeeder::COUNT, Post::class);
+        $this->addLikes(CommentSeeder::COUNT, Comment::class);
+    }
+
+    private function addLikes(int $count, string $class): void
+    {
         $now = now();
         $items = [];
-        foreach (range(1, PostSeeder::COUNT) as $postId) {
+        foreach (range(1, $count) as $postId) {
             $this->faker->unique(true);
 
             foreach (range(1, $this->faker->numberBetween(1, UserSeeder::COUNT)) as $index) {
@@ -29,7 +36,7 @@ final class LikeSeeder extends Seeder
                 $items[] = [
                     'user_id' => $userId,
                     'likeable_id' => $postId,
-                    'likeable_type' => Post::class,
+                    'likeable_type' => $class,
                     'created_at' => $now,
                 ];
             }

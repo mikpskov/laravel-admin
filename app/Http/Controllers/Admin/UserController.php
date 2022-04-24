@@ -24,7 +24,7 @@ final class UserController extends Controller
     public function index(Request $request): View
     {
         $users = User::query()
-            ->withCount(['posts']);
+            ->withCount(['posts', 'comments']);
 
         if ($search = $request->get('search')) {
             $users->where('name', 'like', "%$search%");

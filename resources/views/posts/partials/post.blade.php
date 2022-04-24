@@ -1,4 +1,4 @@
-<article class="shadow-md mb-10 p-4 bg-white" data-post-id="{{ $item->id }}">
+<article class="shadow-md mb-10 p-4 bg-white" data-id="{{ $item->id }}" data-type="posts">
     <header class="mb-4">
         {{-- Author --}}
         <div class="text-sm">
@@ -94,11 +94,12 @@ function like(articleBlock) {
     const likeButton = articleBlock.querySelector('.like-button')
     const likeCounter = articleBlock.querySelector('.like-counter');
     const likeIcon = likeButton.querySelector('svg')
-    const resourceId = articleBlock.dataset.postId
+    const resourceId = articleBlock.dataset.id
+    const type = articleBlock.dataset.type
 
     axios({
         method: likeButton.classList.contains('active') ? 'delete' : 'post',
-        url: `/likes/posts/${resourceId}`,
+        url: `/likes/${type}/${resourceId}`,
     })
         .then(response => {
             likeButton.classList.toggle("active", response.data.data.liked);

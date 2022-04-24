@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\View\Components\Admin;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use App\View\NavItem;
@@ -59,6 +60,11 @@ final class Nav extends Component
                 __('Posts'),
                 route('admin.posts.index'),
                 $user?->can('viewAny', Post::class),
+            ),
+            new NavItem(
+                __('Comments'),
+                route('admin.comments.index'),
+                $user?->can('viewAny', Comment::class),
             ),
         ];
     }
