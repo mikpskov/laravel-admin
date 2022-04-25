@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasPublications;
+use App\Models\Traits\HasVotes;
 use App\View\DropdownItem;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,6 +31,7 @@ final class Post extends Model
     use HasPublications;
     use HasComments;
     use HasLikes;
+    use HasVotes;
 
     protected $with = [
         'author',

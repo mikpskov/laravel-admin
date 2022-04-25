@@ -17,6 +17,7 @@ final class PostController extends Controller
 
         $items = Post::query()
             ->withLikes($request->user())
+            ->withVotes($request->user())
             ->published()
             ->latest();
 
@@ -40,10 +41,12 @@ final class PostController extends Controller
         /** @var Post $post */
         $post = Post::query()
             ->withLikes($request->user())
+            ->withVotes($request->user())
             ->findOrFail($id);
 
         $comments = $post->comments()
             ->withLikes($request->user())
+            ->withVotes($request->user())
             ->approved()
             ->get();
 

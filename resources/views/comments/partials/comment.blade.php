@@ -28,8 +28,11 @@
 
     <footer class="flex justify-between mt-4">
         <div class="flex">
+            {{-- Votes --}}
+            <x-votes type="comments" :model="$item"/>
+
             {{-- Likes --}}
-            <x-likes type="comments" :id="$item->id" :active="$item->liked" :count="$item->likes_count"/>
+            <x-likes type="comments" :id="$item->id" :active="$item->liked" :count="$item->likes_count" class="ml-4"/>
 
             {{-- Bookmarks --}}
             @guest

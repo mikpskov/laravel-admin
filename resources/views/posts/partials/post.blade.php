@@ -34,8 +34,11 @@
 
     <footer class="flex justify-between mt-4">
         <div class="flex">
+            {{-- Votes --}}
+            <x-votes type="posts" :model="$item"/>
+
             {{-- Likes --}}
-            <x-likes type="posts" :id="$item->id" :active="$item->liked" :count="$item->likes_count"/>
+            <x-likes type="posts" :id="$item->id" :active="$item->liked" :count="$item->likes_count" class="ml-4"/>
 
             {{-- Views --}}
             <div class="flex items-center ml-4" title="{{ __('Views') }}">

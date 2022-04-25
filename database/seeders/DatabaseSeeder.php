@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PostSeeder::class,
             LikeSeeder::class,
+            VoteSeeder::class,
             CommentSeeder::class,
         ]);
     }

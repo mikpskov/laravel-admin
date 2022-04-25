@@ -60,4 +60,13 @@ final class PostPolicy
 
         return false;
     }
+
+    public function vote(User $user, Post $model): bool
+    {
+        if ($user->cannot('posts.vote')) {
+            return false;
+        }
+
+        return $user->getKey() !== $model->author_id;
+    }
 }

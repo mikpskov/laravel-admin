@@ -29,4 +29,9 @@ Route::prefix('likes')->name('likes.')->middleware('auth')->group(static functio
     Route::delete('{type}/{id}', [App\Http\Controllers\LikeController::class, 'destroy'])->name('destroy');
 });
 
+Route::prefix('votes')->name('votes.')->middleware('auth')->group(static function (): void {
+    Route::post('{type}/{id}', [App\Http\Controllers\VoteController::class, 'store'])->name('store');
+    Route::delete('{type}/{id}', [App\Http\Controllers\VoteController::class, 'destroy'])->name('destroy');
+});
+
 Auth::routes();

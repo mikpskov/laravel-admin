@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasApproves;
 use App\Models\Traits\HasLikes;
+use App\Models\Traits\HasVotes;
 use App\View\DropdownItem;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,6 +34,7 @@ final class Comment extends Model
     use HasFactory;
     use SoftDeletes;
     use HasLikes;
+    use HasVotes;
     use HasApproves;
 
     protected $with = [

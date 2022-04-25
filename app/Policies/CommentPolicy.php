@@ -48,4 +48,13 @@ final class CommentPolicy
     {
         return $user->can('comments.approve');
     }
+
+    public function vote(User $user, Comment $model): bool
+    {
+        if ($user->cannot('posts.vote')) {
+            return false;
+        }
+
+        return $user->getKey() !== $model->author_id;
+    }
 }
