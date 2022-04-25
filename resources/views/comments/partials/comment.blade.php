@@ -1,4 +1,4 @@
-<article class="shadow-md mb-10 p-4 bg-white" id="comment-{{ $item->id }}" data-id="{{ $item->id }}" data-type="comments">
+<article class="shadow-md mb-10 p-4 bg-white" id="comment-{{ $item->id }}">
     <header class="mb-4 flex items-center justify-between">
         {{-- Author --}}
         <div class="text-sm">
@@ -29,17 +29,7 @@
     <footer class="flex justify-between mt-4">
         <div class="flex">
             {{-- Likes --}}
-            @guest
-                <a href="{{ route('login') }}" class="flex items-center" title="{{ __('Likes') }}">
-                    <x-icon.heart class="mr-2"/>
-                    <span>55</span>
-                </a>
-            @else
-                <button class="flex items-center like-button @if($item->liked) active @endif" title="{{ __('Likes') }}">
-                    <x-icon.heart class="mr-2" filled="{{ $item->liked }}"/>
-                    <span class="like-counter">{{ $item->likes_count }}</span>
-                </button>
-            @endguest
+            <x-likes type="comments" :id="$item->id" :active="$item->liked" :count="$item->likes_count"/>
 
             {{-- Bookmarks --}}
             @guest

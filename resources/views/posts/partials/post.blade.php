@@ -1,4 +1,4 @@
-<article class="shadow-md mb-10 p-4 bg-white" data-id="{{ $item->id }}" data-type="posts">
+<article class="shadow-md mb-10 p-4 bg-white">
     <header class="mb-4">
         {{-- Author --}}
         <div class="text-sm">
@@ -35,17 +35,7 @@
     <footer class="flex justify-between mt-4">
         <div class="flex">
             {{-- Likes --}}
-            @guest
-                <a href="{{ route('login') }}" class="flex items-center" title="{{ __('Likes') }}">
-                    <x-icon.heart class="mr-2"/>
-                    <span>55</span>
-                </a>
-            @else
-                <button class="flex items-center like-button @if($item->liked) active @endif" title="{{ __('Likes') }}">
-                    <x-icon.heart class="mr-2" filled="{{ $item->liked }}"/>
-                    <span class="like-counter">{{ $item->likes_count }}</span>
-                </button>
-            @endguest
+            <x-likes type="posts" :id="$item->id" :active="$item->liked" :count="$item->likes_count"/>
 
             {{-- Views --}}
             <div class="flex items-center ml-4" title="{{ __('Views') }}">
@@ -79,36 +69,3 @@
         </div>
     </footer>
 </article>
-
-@pushOnce('scripts')
-<script>
-(() => {
-    document.querySelectorAll('.like-button').forEach(element => {
-        element.addEventListener('click', event => {
-            like(event.target.closest('article'))
-        })
-    })
-})()
-
-function like(articleBlock) {
-    const likeButton = articleBlock.querySelector('.like-button')
-    const likeCounter = articleBlock.querySelector('.like-counter');
-    const likeIcon = likeButton.querySelector('svg')
-    const resourceId = articleBlock.dataset.id
-    const type = articleBlock.dataset.type
-
-    axios({
-        method: likeButton.classList.contains('active') ? 'delete' : 'post',
-        url: `/likes/${type}/${resourceId}`,
-    })
-        .then(response => {
-            likeButton.classList.toggle("active", response.data.data.liked);
-            likeCounter.innerHTML = response.data.data.likesCount
-            likeIcon.style.fill = response.data.data.liked ? 'currentColor' : 'none';
-        })
-        .catch(error => {
-            alert(error)
-        })
-}
-</script>
-@endpushOnce
