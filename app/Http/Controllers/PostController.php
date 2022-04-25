@@ -16,6 +16,7 @@ final class PostController extends Controller
         Paginator::defaultView('posts.partials.pagination');
 
         $items = Post::query()
+            ->withApprovedCommentsCount()
             ->withLikes($request->user())
             ->withVotes($request->user())
             ->published()
@@ -40,6 +41,7 @@ final class PostController extends Controller
     {
         /** @var Post $post */
         $post = Post::query()
+            ->withApprovedCommentsCount()
             ->withLikes($request->user())
             ->withVotes($request->user())
             ->findOrFail($id);

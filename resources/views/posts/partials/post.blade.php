@@ -62,7 +62,7 @@
             {{-- Comments --}}
             <a href="{{ route('posts.show', $item) . '#comments' }}" class="flex items-center ml-4" title="{{ __('Comments') }}">
                 <x-icon.chat class="mr-2"/>
-                <span>56</span>
+                <span>{{ $item->comments_count }}</span>
             </a>
         </div>
 

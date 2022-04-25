@@ -6,6 +6,7 @@ namespace App\Models\Traits;
 
 use App\Models\Comment;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -22,15 +23,16 @@ trait HasComments
         }
     }
 
+    public function scopeWithApprovedCommentsCount(Builder $query): Builder
+    {
+        return $query->withCount(['comments' => fn(Builder $query) => $query->approved()]);
+    }
+
     public function comment(User $user, string $body)
     {
         $comment = new Comment([
             'body' => $body,
         ]);
-
-        // if (($user instanceof Commentator) ? !$user->needsCommentApproval($this) : false) {
-        //     $comment->approved_at = now();
-        // }
 
         return $this->comments()->save($comment);
     }
