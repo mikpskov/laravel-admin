@@ -1,7 +1,7 @@
 @guest
     <a href="{{ route('login') }}" class="flex items-center" title="{{ __('Likes') }}" {{ $attributes }}>
-        <x-icon.heart class="mr-2"/>
-        <span>55</span>
+        <x-icon.bookmark class="mr-2"/>
+        <span class="like-counter">{{ $count }}</span>
     </a>
 @else
     <button
@@ -10,7 +10,7 @@
         data-id="{{ $id }}"
         {{ $attributes->merge(['class' => 'flex items-center like-button' . ($active ? ' active' : '')]) }}
     >
-        <x-icon.heart class="mr-2" filled="{{ $active }}"/>
+        <x-icon.bookmark class="mr-2" filled="{{ $active }}"/>
         <span class="like-counter">{{ $count }}</span>
     </button>
 @endguest

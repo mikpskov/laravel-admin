@@ -31,21 +31,8 @@
             {{-- Votes --}}
             <x-votes type="comments" :model="$item"/>
 
-            {{-- Likes --}}
-            <x-likes type="comments" :id="$item->id" :active="$item->liked" :count="$item->likes_count" class="ml-6"/>
-
             {{-- Bookmarks --}}
-            @guest
-                <a href="{{ route('login') }}" class="flex items-center ml-6" title="{{ __('Bookmarks') }}">
-                    <x-icon.bookmark class="mr-2"/>
-                    <span>2</span>
-                </a>
-            @else
-                <a href="#" class="flex items-center ml-6" title="{{ __('Bookmarks') }}">
-                    <x-icon.bookmark class="mr-2"/>
-                    <span>2</span>
-                </a>
-            @endguest
+            <x-likes type="comments" :id="$item->id" :active="$item->liked" :count="$item->likes_count" class="ml-6"/>
         </div>
 
         {{-- Created At --}}

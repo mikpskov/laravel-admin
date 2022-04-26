@@ -37,9 +37,6 @@
             {{-- Votes --}}
             <x-votes type="posts" :model="$item"/>
 
-            {{-- Likes --}}
-            <x-likes type="posts" :id="$item->id" :active="$item->liked" :count="$item->likes_count" class="ml-6"/>
-
             {{-- Views --}}
             <div class="flex items-center ml-6" title="{{ __('Views') }}">
                 <x-icon.eye class="mr-2"/>
@@ -47,17 +44,7 @@
             </div>
 
             {{-- Bookmarks --}}
-            @guest
-                <a href="{{ route('login') }}" class="flex items-center ml-6" title="{{ __('Bookmarks') }}">
-                    <x-icon.bookmark class="mr-2"/>
-                    <span>2</span>
-                </a>
-            @else
-                <a href="#" class="flex items-center ml-6" title="{{ __('Bookmarks') }}">
-                    <x-icon.bookmark class="mr-2"/>
-                    <span>2</span>
-                </a>
-            @endguest
+            <x-likes type="posts" :id="$item->id" :active="$item->liked" :count="$item->likes_count" class="ml-6"/>
 
             {{-- Comments --}}
             <a href="{{ route('posts.show', $item) . '#comments' }}" class="flex items-center ml-6" title="{{ __('Comments') }}">
