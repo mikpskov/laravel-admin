@@ -54,8 +54,8 @@
         </div>
 
         {{-- Created At --}}
-        <div class="text-gray-400" title="{{ $item->created_at }}">
+        <time class="text-gray-400" title="{{ $item->created_at }}">
             {{ $item->created_at->diffForHumans() }}
-        </div>
+        </time>
     </footer>
 </article>
