@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasPublications;
+use App\Models\Traits\HasTags;
 use App\Models\Traits\HasVotes;
 use App\View\DropdownItem;
 use Carbon\CarbonInterface;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
- * @property int $author_id
+ * @property int $user_id
  * @property string $title
  * @property string $body
  * @property CarbonInterface|null $published_at
@@ -43,7 +44,7 @@ final class Post extends Model
     ];
 
     protected $casts = [
-        'author_id' => 'int',  // todo: HasAuthor trait
+        'user_id' => 'int',  // todo: HasAuthor trait
     ];
 
     protected $perPage = 20;
@@ -52,18 +53,18 @@ final class Post extends Model
     {
         /** @var User $user */
         if ($user = auth()->user()) {
-            self::creating(fn(self $model) => $model->author_id ??= $user->id);
+            self::creating(fn(self $model) => $model->user_id ??= $user->id);
         }
     }
 
     public function scopeByAuthorId(Builder $query, int $authorId): Builder
     {
-        return $query->where('author_id', $authorId);
+        return $query->where('user_id', $authorId);
     }
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function getActions(): array

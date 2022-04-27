@@ -28,7 +28,7 @@ final class CommentPolicy
             return false;
         }
 
-        return $user->getKey() === $comment->author_id;
+        return $user->getKey() === $comment->user_id;
     }
 
     public function delete(User $user, Comment $comment): bool
@@ -38,7 +38,7 @@ final class CommentPolicy
         }
 
         if ($user->can('comments.delete_own')) {
-            return $user->getKey() === $comment->author_id;
+            return $user->getKey() === $comment->user_id;
         }
 
         return false;
@@ -55,6 +55,6 @@ final class CommentPolicy
             return false;
         }
 
-        return $user->getKey() !== $model->author_id;
+        return $user->getKey() !== $model->user_id;
     }
 }

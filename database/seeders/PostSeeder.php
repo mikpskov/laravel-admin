@@ -24,7 +24,7 @@ final class PostSeeder extends Seeder
             $createdAt = $this->faker->dateTimeBetween('-1 month');
 
             $items[] = [
-                'author_id' => random_int(1, UserSeeder::COUNT),
+                'user_id' => random_int(1, UserSeeder::COUNT),
                 'title' => rtrim($this->faker->sentence, '.'),
                 'body' => $this->faker->text(2000),
                 'published_at' => $this->faker->randomElement([now(), null]),

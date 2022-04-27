@@ -26,7 +26,7 @@ final class PostController extends Controller
             $items->where('title', 'like', "%$search%");
         }
 
-        $headers = ['id', 'author_id', 'title', 'body', 'created_at'];
+        $headers = ['id', 'user_id', 'title', 'body', 'created_at'];
 
         return view('posts.index', [
             'headers' => $headers,

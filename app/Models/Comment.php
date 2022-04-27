@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int $id
- * @property int $author_id
+ * @property int $user_id
  * @property int $post_id
  * @property string $body
  * @property CarbonInterface|null $approved_at
@@ -46,7 +46,7 @@ final class Comment extends Model
     ];
 
     protected $casts = [
-        'author_id' => 'int',
+        'user_id' => 'int',
         'post_id' => 'int',
     ];
 
@@ -54,13 +54,13 @@ final class Comment extends Model
     {
         /** @var User $user */
         if ($user = auth()->user()) {
-            self::creating(fn(self $model) => $model->author_id ??= $user->id);
+            self::creating(fn(self $model) => $model->user_id ??= $user->id);
         }
     }
 
     public function scopeByAuthorId(Builder $query, int $authorId): Builder
     {
-        return $query->where('author_id', $authorId);
+        return $query->where('user_id', $authorId);
     }
 
     public function scopeByPostId(Builder $query, int $postId): Builder
@@ -70,7 +70,7 @@ final class Comment extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function post(): BelongsTo

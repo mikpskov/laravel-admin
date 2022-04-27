@@ -19,7 +19,7 @@ trait HasComments
     {
         /** @var User $user */
         if ($user = auth()->user()) {
-            self::creating(fn(self $model) => $model->author_id ??= $user->getKey());
+            self::creating(fn(self $model) => $model->user_id ??= $user->getKey());
         }
     }
 

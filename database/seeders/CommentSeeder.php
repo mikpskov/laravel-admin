@@ -10,7 +10,7 @@ use Illuminate\Database\Seeder;
 
 final class CommentSeeder extends Seeder
 {
-    public const COUNT = 2000;
+    public const COUNT = 1000;
 
     public function __construct(
         private readonly Generator $faker,
@@ -25,7 +25,7 @@ final class CommentSeeder extends Seeder
             $approvedAt = $this->faker->randomElement([now(), null]);
 
             $items[] = [
-                'author_id' => random_int(1, UserSeeder::COUNT),
+                'user_id' => random_int(1, UserSeeder::COUNT),
                 'post_id' => random_int(1, PostSeeder::COUNT),
                 'body' => $this->faker->text,
                 'approved_at' => $approvedAt,

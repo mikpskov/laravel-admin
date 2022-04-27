@@ -29,7 +29,7 @@ final class PostPolicy
         }
 
         if ($user->can('posts.update_own')) {
-            return $user->id === $model->author_id;
+            return $user->id === $model->user_id;
         }
 
         return false;
@@ -42,7 +42,7 @@ final class PostPolicy
         }
 
         if ($user->can('posts.delete_own')) {
-            return $user->id === $model->author_id;
+            return $user->id === $model->user_id;
         }
 
         return false;
@@ -55,7 +55,7 @@ final class PostPolicy
         }
 
         if ($user->can('posts.publish_own')) {
-            return $user->id === $model->author_id;
+            return $user->id === $model->user_id;
         }
 
         return false;
@@ -67,6 +67,6 @@ final class PostPolicy
             return false;
         }
 
-        return $user->getKey() !== $model->author_id;
+        return $user->getKey() !== $model->user_id;
     }
 }

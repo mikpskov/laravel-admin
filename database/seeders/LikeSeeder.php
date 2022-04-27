@@ -23,11 +23,11 @@ final class LikeSeeder extends Seeder
         $this->addLikes(CommentSeeder::COUNT, Comment::class);
     }
 
-    private function addLikes(int $count, string $class): void
+    private function addLikes(int $count, string $likeableType): void
     {
         $now = now();
         $items = [];
-        foreach (range(1, $count) as $postId) {
+        foreach (range(1, $count) as $likeableId) {
             $this->faker->unique(true);
 
             foreach (range(1, $this->faker->numberBetween(1, UserSeeder::COUNT)) as $index) {
@@ -35,8 +35,8 @@ final class LikeSeeder extends Seeder
 
                 $items[] = [
                     'user_id' => $userId,
-                    'likeable_id' => $postId,
-                    'likeable_type' => $class,
+                    'likeable_id' => $likeableId,
+                    'likeable_type' => $likeableType,
                     'created_at' => $now,
                 ];
             }
