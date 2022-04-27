@@ -53,7 +53,7 @@ trait HasVotes
         return (bool)$this->getVoteBy($user, $direction);
     }
 
-    public function scopeWithVotes(Builder $query, User $user): Builder
+    public function scopeWithVotes(Builder $query, ?User $user): Builder
     {
         return $query->withCount([
             'votes as votes_up_count' => fn($query) => $query->up(),

@@ -35,9 +35,9 @@ final class Vote extends Model
         return $query->where('direction', false);
     }
 
-    public function scopeByUser(Builder $query, User $user): Builder
+    public function scopeByUser(Builder $query, ?User $user): Builder
     {
-        return $query->where('user_id', $user->getKey());
+        return $query->where('user_id', $user?->getKey());
     }
 
     public function voteable(): MorphTo
