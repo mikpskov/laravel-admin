@@ -1,9 +1,13 @@
+@php
+$isList ??= false;
+@endphp
+
 <article class="shadow-md mb-10 p-4 bg-white">
     <header class="mb-4">
         {{-- Author --}}
         <div class="text-sm">
             <span class="text-gray-400">{{ __('Posted by') }}</span>
-            <a href="#" class="font-bold">{{ $item->author->name }}</a>
+            <a href="{{ route('users.show', $item->author) }}" class="font-bold">{{ $item->author->name }}</a>
         </div>
 
         {{-- Title --}}

@@ -53,6 +53,22 @@ trait HasVotes
         return (bool)$this->getVoteBy($user, $direction);
     }
 
+    public function scopeUpvotedBy(Builder $query, User $user): Builder
+    {
+        return $query->whereHas('votes', fn($query) => $query
+            ->where('user_id', $user->getKey())
+            ->where('direction', true)
+        );
+    }
+
+    public function scopeDownvotedBy(Builder $query, User $user): Builder
+    {
+        return $query->whereHas('votes', fn($query) => $query
+            ->where('user_id', $user->getKey())
+            ->where('direction', false)
+        );
+    }
+
     public function scopeWithVotes(Builder $query, ?User $user): Builder
     {
         return $query->withCount([

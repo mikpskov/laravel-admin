@@ -2,8 +2,7 @@
     <header class="mb-4 flex items-center justify-between">
         {{-- Author --}}
         <div class="text-sm">
-            <span class="text-gray-400">{{ __('Posted by') }}</span>
-            <a href="#" class="font-bold">{{ $item->author->name }}</a>
+            <a href="{{ route('users.show', $item->author) }}" class="font-bold">{{ $item->author->name }}</a>
         </div>
 
         {{-- Actions --}}

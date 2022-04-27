@@ -35,4 +35,19 @@ final class UserPolicy
     {
         return $user->can('users.delete');
     }
+
+    public function saved(User $user, User $model): bool
+    {
+        return $user->is($model);
+    }
+
+    public function upvoted(User $user, User $model): bool
+    {
+        return $user->is($model);
+    }
+
+    public function downvoted(User $user, User $model): bool
+    {
+        return $user->is($model);
+    }
 }

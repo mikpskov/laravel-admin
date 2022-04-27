@@ -24,6 +24,18 @@ Route::name('posts.')->group(static function (): void {
     });
 });
 
+Route::prefix('users/{user}')->name('users.')->group(static function (): void {
+    Route::get('', [App\Http\Controllers\UserController::class, 'show'])->name('show');
+    Route::get('posts', [App\Http\Controllers\UserController::class, 'posts'])->name('posts');
+    Route::get('comments', [App\Http\Controllers\UserController::class, 'comments'])->name('comments');
+    Route::get('saved/{page?}', [App\Http\Controllers\UserController::class, 'savedPosts'])->name('saved_posts')->where('page', 'posts');
+    Route::get('saved/comments', [App\Http\Controllers\UserController::class, 'savedComments'])->name('saved_comments');
+    Route::get('upvoted/{page?}', [App\Http\Controllers\UserController::class, 'upvotedPosts'])->name('upvoted_posts')->where('page', 'posts');
+    Route::get('upvoted/comments', [App\Http\Controllers\UserController::class, 'upvotedComments'])->name('upvoted_comments');
+    Route::get('downvoted/{page?}', [App\Http\Controllers\UserController::class, 'downvotedPosts'])->name('downvoted_posts')->where('page', 'posts');
+    Route::get('downvoted/comments', [App\Http\Controllers\UserController::class, 'downvotedComments'])->name('downvoted_comments');
+});
+
 Route::prefix('likes')->name('likes.')->middleware('auth')->group(static function (): void {
     Route::post('{type}/{id}', [App\Http\Controllers\LikeController::class, 'store'])->name('store');
     Route::delete('{type}/{id}', [App\Http\Controllers\LikeController::class, 'destroy'])->name('destroy');
