@@ -33,7 +33,9 @@ final class {{ class }} extends Controller
 
     public function show({{ model }} ${{ modelVariable }}): View
     {
-        return view('.show');
+        return view('.show', [
+            'item' => ${{ modelVariable }},
+        ]);
     }
 
     public function edit({{ model }} ${{ modelVariable }}): View
