@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::name('posts.')->group(static function (): void {
-    Route::get('/', [App\Http\Controllers\PostController::class, 'index'])->name('index');
+    Route::get('/{page?}', [App\Http\Controllers\PostController::class, 'index'])->name('index')->where('page', 'posts');
     Route::get('/posts/{post}', [App\Http\Controllers\PostController::class, 'show'])->name('show');
 
     Route::prefix('/posts/{post}/comments')->name('comments.')->group(static function (): void {
