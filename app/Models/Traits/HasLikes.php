@@ -54,11 +54,11 @@ trait HasLikes
         );
     }
 
-    public function scopeWithLikes(Builder $query, User $user, string $alias = 'liked'): Builder
+    public function scopeWithLikes(Builder $query, ?User $user, string $alias = 'liked'): Builder
     {
         return $query->withCount([
             'likes',
-            "likes as {$alias}" => fn($query) => $query->where('user_id', $user->getKey()),
+            "likes as {$alias}" => fn($query) => $query->where('user_id', $user?->getKey()),
         ]);
     }
 

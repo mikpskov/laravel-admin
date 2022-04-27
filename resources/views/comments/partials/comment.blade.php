@@ -32,7 +32,7 @@
             <x-votes type="comments" :model="$item"/>
 
             {{-- Bookmarks --}}
-            <x-likes type="comments" :id="$item->id" :active="$item->liked" :count="$item->likes_count" class="ml-6"/>
+            <x-likes type="comments" :model="$item" class="ml-6"/>
         </div>
 
         {{-- Created At --}}

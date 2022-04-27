@@ -44,7 +44,7 @@
             </div>
 
             {{-- Bookmarks --}}
-            <x-likes type="posts" :id="$item->id" :active="$item->liked" :count="$item->likes_count" class="ml-6"/>
+            <x-likes type="posts" :model="$item" class="ml-6"/>
 
             {{-- Comments --}}
             <a href="{{ route('posts.show', $item) . '#comments' }}" class="flex items-center ml-6" title="{{ __('Comments') }}">
