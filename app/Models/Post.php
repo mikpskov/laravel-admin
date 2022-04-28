@@ -33,6 +33,7 @@ final class Post extends Model
     use HasComments;
     use HasLikes;
     use HasVotes;
+    use HasTags;
 
     protected $with = [
         'author',

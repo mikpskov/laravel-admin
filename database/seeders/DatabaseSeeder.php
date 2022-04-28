@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             LikeSeeder::class,
             VoteSeeder::class,
             CommentSeeder::class,
+            TagSeeder::class,
         ]);
     }
 }

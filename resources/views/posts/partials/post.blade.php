@@ -19,11 +19,8 @@ $isList ??= false;
             @endif
         </h2>
 
-        <div class="text-sm text-gray-400">
-            <a href="#">main tag</a>,
-            <a href="#">second</a>,
-            <a href="#">more one</a>
-        </div>
+        {{-- Tags --}}
+        <x-tags :item="$item"/>
     </header>
 
     <main>

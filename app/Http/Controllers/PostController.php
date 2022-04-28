@@ -19,6 +19,8 @@ final class PostController extends Controller
             ->withApprovedCommentsCount()
             ->withLikes($request->user())
             ->withVotes($request->user())
+            ->with('tags')
+            ->byTag($request->get('tag'))
             ->published()
             ->latest();
 
@@ -26,11 +28,8 @@ final class PostController extends Controller
             $items->where('title', 'like', "%$search%");
         }
 
-        $headers = ['id', 'user_id', 'title', 'body', 'created_at'];
-
         return view('posts.index', [
-            'headers' => $headers,
-            'items' => $items->paginate(10, $headers)  // todo: move perPage to config
+            'items' => $items->paginate(10)  // todo: move perPage to config
                 ->appends($request->except('page')),
             'search' => $search ?? '',
             'title' => __('Posts'),

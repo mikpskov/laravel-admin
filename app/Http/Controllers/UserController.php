@@ -29,6 +29,7 @@ final class UserController extends Controller
             ->withApprovedCommentsCount()
             ->withLikes($request->user())
             ->withVotes($request->user())
+            ->with('tags')
             ->published()
             ->latest()
             ->paginate(10);
@@ -57,6 +58,7 @@ final class UserController extends Controller
             ->likedBy($user)
             ->withLikes($request->user())
             ->withVotes($request->user())
+            ->with('tags')
             ->published()
             ->latest()
             ->paginate(10);
@@ -88,6 +90,7 @@ final class UserController extends Controller
             ->upvotedBy($user, true)
             ->withLikes($request->user())
             ->withVotes($request->user())
+            ->with('tags')
             ->published()
             ->latest()
             ->paginate(10);
@@ -119,6 +122,7 @@ final class UserController extends Controller
             ->downvotedBy($user)
             ->withLikes($request->user())
             ->withVotes($request->user())
+            ->with('tags')
             ->published()
             ->latest()
             ->paginate(10);
