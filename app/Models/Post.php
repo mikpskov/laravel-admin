@@ -8,13 +8,12 @@ use App\Models\Traits\HasComments;
 use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasPublications;
 use App\Models\Traits\HasTags;
+use App\Models\Traits\HasUser;
 use App\Models\Traits\HasVotes;
 use App\View\DropdownItem;
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -24,11 +23,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property CarbonInterface|null $published_at
  * @property CarbonInterface $created_at
  * @property CarbonInterface $updated_at
- * @property User $author
  */
 final class Post extends Model
 {
     use HasFactory;
+    use HasUser;
     use HasPublications;
     use HasComments;
     use HasLikes;
@@ -36,7 +35,7 @@ final class Post extends Model
     use HasTags;
 
     protected $with = [
-        'author',
+        'user',
     ];
 
     protected $fillable = [
@@ -44,29 +43,7 @@ final class Post extends Model
         'body',
     ];
 
-    protected $casts = [
-        'user_id' => 'int',  // todo: HasAuthor trait
-    ];
-
     protected $perPage = 20;
-
-    protected static function booted(): void
-    {
-        /** @var User $user */
-        if ($user = auth()->user()) {
-            self::creating(fn(self $model) => $model->user_id ??= $user->id);
-        }
-    }
-
-    public function scopeByAuthorId(Builder $query, int $authorId): Builder
-    {
-        return $query->where('user_id', $authorId);
-    }
-
-    public function author(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 
     public function getActions(): array
     {

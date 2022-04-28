@@ -22,14 +22,11 @@ final class PostController extends Controller
     public function index(Request $request): View
     {
         $items = Post::query()
+            ->byUserId($request->get('user'))
             ->latest();
 
         if ($request->user()->cannot('posts.view_any')) {
-            $items->byAuthorId($request->user()->getKey());
-        }
-
-        if ($authorId = $request->get('author')) {
-            $items->byAuthorId($authorId);
+            $items->byUserId($request->user()->getKey());
         }
 
         if ($search = $request->get('search')) {

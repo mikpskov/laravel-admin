@@ -21,7 +21,8 @@ final class CommentController extends Controller
     public function index(Request $request): View
     {
         $items = Comment::query()
-            ->with(['author', 'post'])
+            ->with('post')
+            ->byUserId($request->get('user'))
             ->latest();
 
         if ($search = $request->get('search')) {
@@ -29,10 +30,6 @@ final class CommentController extends Controller
                 $query->where('id', 'like', "%$search%");
                 $query->orWhere('body', 'like', "%$search%");
             });
-        }
-
-        if ($authorId = $request->get('author')) {
-            $items->byAuthorId($authorId);
         }
 
         if ($postId = $request->get('post')) {

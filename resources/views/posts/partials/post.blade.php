@@ -7,7 +7,7 @@ $isList ??= false;
         {{-- Author --}}
         <div class="text-sm">
             <span class="text-gray-400">{{ __('Posted by') }}</span>
-            <a href="{{ route('users.show', $item->author) }}" class="font-bold">{{ $item->author->name }}</a>
+            <a href="{{ route('users.show', $item->user) }}" class="font-bold">{{ $item->user->name }}</a>
         </div>
 
         {{-- Title --}}

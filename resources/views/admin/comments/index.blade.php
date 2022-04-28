@@ -19,7 +19,7 @@
                         @foreach($items as $item)
                             <tr @if(!$item->isApproved()) class="table-secondary" @endif>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->author->name }}</td>
+                                <td>{{ $item->user->name }}</td>
                                 <td>{{ $item->post->title }}</td>
 
                                 <td class="text-end actions-column">

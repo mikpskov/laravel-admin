@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasApproves;
 use App\Models\Traits\HasLikes;
+use App\Models\Traits\HasUser;
 use App\Models\Traits\HasVotes;
 use App\View\DropdownItem;
 use Carbon\CarbonInterface;
@@ -25,20 +26,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property CarbonInterface $created_at
  * @property CarbonInterface $updated_at
  * @property CarbonInterface|null $deleted_at
- * @property User $author
  * @property Post $post
  * @property User $approver
  */
 final class Comment extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    use HasUser;
     use HasLikes;
     use HasVotes;
     use HasApproves;
+    use SoftDeletes;
 
     protected $with = [
-        'author',
+        'user',
     ];
 
     protected $fillable = [
@@ -46,31 +47,12 @@ final class Comment extends Model
     ];
 
     protected $casts = [
-        'user_id' => 'int',
         'post_id' => 'int',
     ];
-
-    protected static function booted(): void
-    {
-        /** @var User $user */
-        if ($user = auth()->user()) {
-            self::creating(fn(self $model) => $model->user_id ??= $user->id);
-        }
-    }
-
-    public function scopeByAuthorId(Builder $query, int $authorId): Builder
-    {
-        return $query->where('user_id', $authorId);
-    }
 
     public function scopeByPostId(Builder $query, int $postId): Builder
     {
         return $query->where('post_id', $postId);
-    }
-
-    public function author(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function post(): BelongsTo
