@@ -1,8 +1,13 @@
 <article class="shadow-md mb-10 p-4 bg-white" id="comment-{{ $item->id }}">
-    <header class="mb-4 flex items-center justify-between">
+    <header class="mb-4 flex items-start justify-between">
         {{-- Author --}}
-        <div class="text-sm">
-            <a href="{{ route('users.show', $item->user) }}" class="font-bold">{{ $item->user->name }}</a>
+        <div class="flex items-center">
+            <figure class="rounded-full overflow-hidden">
+                <img src="https://avatar.oxro.io/avatar.svg?width=40&height=40&fontSize=20&name={{ urlencode($item->user->name) }}" alt="{{ $item->user->name }}">
+            </figure>
+            <div class="ml-4">
+                <a href="{{ route('users.show', $item->user) }}" class="font-bold text-sm">{{ $item->user->name }}</a>
+            </div>
         </div>
 
         {{-- Actions --}}
