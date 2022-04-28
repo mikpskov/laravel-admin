@@ -10,6 +10,11 @@
 <body class="max-w-5xl mx-auto px-4 pb-10 pt-10 sm:px-6 md:px-8 xl:px-12 xl:max-w-6xl text-gray-600 bg-gray-100 dark:bg-gray-900">
 @yield('content')
 
+{{-- Home button --}}
+<a href="{{ route('posts.index') }}" class="fixed top-0 left-0 px-6 py-4 block">
+    {{ __('Home') }}
+</a>
+
 @if (Route::has('login'))
     <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
         @auth
