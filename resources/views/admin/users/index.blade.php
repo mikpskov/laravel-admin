@@ -25,8 +25,28 @@
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
-                                <td><a href="{{ route('admin.posts.index', ['user' => $item->id]) }}" title="{{ __('Posts') }}">{{ $item->posts_count }}</a></td>
-                                <td><a href="{{ route('admin.comments.index', ['user' => $item->id]) }}" title="{{ __('Comments') }}">{{ $item->comments_count }}</a></td>
+
+                                <td>
+                                    <a
+                                        href="{{ route('admin.posts.index', ['user' => $item->id]) }}"
+                                        title="{{ __('Posts') }}"
+                                        class="link-secondary text-decoration-none"
+                                    >
+                                        <i class="bi bi-file-text"></i>
+                                        {{ $item->posts_count }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a
+                                        href="{{ route('admin.comments.index', ['user' => $item->id]) }}"
+                                        title="{{ __('Comments') }}"
+                                        class="link-secondary text-decoration-none"
+                                    >
+                                        <i class="bi bi-chat-dots"></i>
+                                        {{ $item->comments_count }}
+                                    </a>
+                                </td>
 
                                 <td class="text-end actions-column">
                                     @canany(['update', 'delete'], $item)
