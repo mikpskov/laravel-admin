@@ -25,6 +25,16 @@ final class CommentController extends Controller
             ->byUserId($request->get('user'))
             ->latest();
 
+        if ($request->has('approved')) {
+            $approvedFilter = $request->get('approved');
+
+            if ($approvedFilter === '0') {
+                $items->unapproved();
+            } elseif ($approvedFilter === '1') {
+                $items->approved();
+            }
+        }
+
         if ($search = $request->get('search')) {
             $items->where(function (Builder $query) use ($search) {
                 $query->where('id', 'like', "%$search%");
@@ -43,6 +53,7 @@ final class CommentController extends Controller
                 ->appends($request->except('page')),
             'perPage' => $perPage ?? (new Comment())->getPerPage(),
             'search' => $search ?? '',
+            'approvedFilter' => $approvedFilter ?? '-1',
             'title' => __('Comments'),
         ]);
     }

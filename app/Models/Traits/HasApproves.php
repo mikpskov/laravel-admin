@@ -23,7 +23,7 @@ trait HasApproves
         return $query->whereNotNull($this->getApprovedAtColumn());
     }
 
-    public function scopeDisapproved(Builder $query): Builder
+    public function scopeUnapproved(Builder $query): Builder
     {
         return $query->whereNull($this->getApprovedAtColumn());
     }

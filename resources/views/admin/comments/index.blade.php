@@ -8,9 +8,17 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">{{ $title }}</h5>
 
-                    <form method="get">
-                        <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
-                    </form>
+                    <div id="filters" class="d-flex">
+                        <form method="get">
+                            <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
+                        </form>
+
+                        <x-admin.select
+                            name="filter[approved]"
+                            :options="['-1' => 'all', 0 => 'unapproved', 1 => 'approved']"
+                            :selected="$approvedFilter"
+                        ></x-admin.select>
+                    </div>
                 </div>
 
                 <div class="card-body p-0">
@@ -68,6 +76,15 @@
         document.cookie = `comments_perPage=${this.value}`;
         window.location.replace("{{ route('admin.comments.index') }}");
     });
+
+    document
+        .getElementById('filters')
+        .querySelector('select[name="filter[approved]"]')
+        .addEventListener('change', function() {
+            window.location.replace(
+                "{{ route('admin.comments.index') }}" + (this.value >= 0 ? `?approved=${this.value}` : '')
+            )
+        })
 })()
 </script>
 @endpush
