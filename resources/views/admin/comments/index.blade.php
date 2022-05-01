@@ -8,16 +8,20 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">{{ $title }}</h5>
 
-                    <div id="filters" class="d-flex">
-                        <form method="get">
-                            <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
-                        </form>
+                    <div id="filters" class="row">
+                        <div class="col">
+                            <form method="get">
+                                <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
+                            </form>
+                        </div>
 
-                        <x-admin.select
-                            name="filter[approved]"
-                            :options="['-1' => 'all', 0 => 'unapproved', 1 => 'approved']"
-                            :selected="$approvedFilter"
-                        ></x-admin.select>
+                        <div class="col">
+                            <x-admin.select
+                                name="filter[approved]"
+                                :options="['-1' => 'all', 0 => 'unapproved', 1 => 'approved']"
+                                :selected="$approvedFilter"
+                            ></x-admin.select>
+                        </div>
                     </div>
                 </div>
 
