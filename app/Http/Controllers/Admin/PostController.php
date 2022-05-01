@@ -87,7 +87,7 @@ final class PostController extends Controller
 
         $post->publish();
 
-        return redirect()->route('admin.posts.index');
+        return redirect()->back();
     }
 
     public function unpublish(Post $post): RedirectResponse
@@ -96,7 +96,7 @@ final class PostController extends Controller
 
         $post->unpublish();
 
-        return redirect()->route('admin.posts.index');
+        return redirect()->back();
     }
 
     public function destroy(Post $post): RedirectResponse

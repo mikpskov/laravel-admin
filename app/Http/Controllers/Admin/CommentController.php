@@ -64,7 +64,7 @@ final class CommentController extends Controller
 
         $comment->approve();
 
-        return redirect()->route('admin.comments.index');
+        return redirect()->back();
     }
 
     public function disapprove(Comment $comment): RedirectResponse
@@ -73,7 +73,7 @@ final class CommentController extends Controller
 
         $comment->disapprove();
 
-        return redirect()->route('admin.comments.index');
+        return redirect()->back();
     }
 
     public function destroy(Comment $comment): RedirectResponse
