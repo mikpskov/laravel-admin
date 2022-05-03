@@ -33,12 +33,16 @@ final class UserSeeder extends Seeder
         $items = [];
         foreach (range(1, self::COUNT - 1) as $index)
         {
+            $createdAt = $this->faker->dateTimeBetween('-1 month');
+
             $items[] = [
                 'name' => $this->faker->name(),
                 'email' => $this->faker->unique()->safeEmail(),
                 'email_verified_at' => now(),
                 'password' => $password,
                 'remember_token' => Str::random(10),
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
             ];
         }
 

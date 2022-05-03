@@ -25,6 +25,7 @@
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
+                                <td><span title="{{ $item->created_at }}">{{ $item->created_at?->diffForHumans() }}</span></td>
 
                                 <td>
                                     <a
