@@ -51,7 +51,7 @@ final class CommentController extends Controller
         return view('admin.comments.index', [
             'items' => $items->paginate($perPage)
                 ->appends($request->except('page')),
-            'perPage' => $perPage ?? (new Comment())->getPerPage(),
+            'perPage' => $perPage ?? config('pagination.per_page.default'),
             'search' => $search ?? '',
             'approvedFilter' => $approvedFilter ?? '-1',
             'title' => __('Comments'),

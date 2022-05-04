@@ -45,7 +45,7 @@ final class UserController extends Controller
 
         return view('admin.users.index', [
             'items' => $users->paginate($perPage)->appends($request->except('page')),
-            'perPage' => $perPage ?? (new User())->getPerPage(),
+            'perPage' => $perPage ?? config('pagination.per_page.default'),
             'search' => $search ?? '',
             'order' => $order ?? '',
             'title' => __('Users'),

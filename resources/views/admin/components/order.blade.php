@@ -2,7 +2,7 @@
     name="order"
     :options="$orders"
     :selected="$selected"
-></x-admin.select>
+/>
 
 @pushOnce('scripts')
 <script>

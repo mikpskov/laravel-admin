@@ -43,8 +43,6 @@ final class Post extends Model
         'body',
     ];
 
-    protected $perPage = 20;
-
     public function getActions(): array
     {
         /** @var User|null $user */

@@ -5,16 +5,18 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <header class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">{{ $title }}</h5>
 
                     <div id="filters" class="row">
+                        {{-- Search input --}}
                         <div class="col">
                             <form method="get">
                                 <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
                             </form>
                         </div>
 
+                        {{-- Approved select --}}
                         <div class="col">
                             <x-admin.select
                                 name="filter[approved]"
@@ -23,15 +25,16 @@
                             ></x-admin.select>
                         </div>
                     </div>
-                </div>
+                </header>
 
-                <div class="card-body p-0">
+                <main class="card-body p-0">
                     <table class="table table-sm table-actions">
                         <tbody>
                         @foreach($items as $item)
                             <tr @if(!$item->isApproved()) class="table-secondary" @endif>
                                 <td>{{ $item->id }}</td>
 
+                                {{-- User name --}}
                                 <td>
                                     <a
                                         href="{{ route('users.show', $item->user_id) }}"
@@ -41,6 +44,7 @@
                                     </a>
                                 </td>
 
+                                {{-- Post title --}}
                                 <td>
                                     <a
                                         href="{{ route('posts.show', ['post' => $item->post_id]) . "#comment-{$item->id}" }}"
@@ -50,6 +54,7 @@
                                     </a>
                                 </td>
 
+                                {{-- Actions --}}
                                 <td class="text-end actions-column">
                                     @canany(['approve', 'delete'], $item)
                                         <a
@@ -70,15 +75,11 @@
                         @endforeach
                         </tbody>
                     </table>
-                </div>
+                </main>
 
                 <footer class="card-footer d-flex justify-content-between align-items-center">
                     <div>
-                        <x-admin.select
-                            name="perPage"
-                            :options="[20 => 20, 50 => 50, 100 => 100]"
-                            selected="{{ $perPage }}"
-                        />
+                        <x-admin.per-page name="comments_perPage" :items="config('pagination.per_page.elements')" :selected="$perPage"/>
                     </div>
 
                     {{ $items->links() }}
@@ -92,11 +93,6 @@
 @push('scripts')
 <script>
 (() => {
-    document.getElementById('perPage').addEventListener('change', function() {
-        document.cookie = `comments_perPage=${this.value}`;
-        window.location.replace("{{ route('admin.comments.index') }}");
-    });
-
     document
         .getElementById('filters')
         .querySelector('select[name="filter[approved]"]')

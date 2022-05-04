@@ -51,7 +51,7 @@ final class PostController extends Controller
         return view('admin.posts.index', [
             'items' => $items->paginate($perPage)
                 ->appends($request->except('page')),
-            'perPage' => $perPage ?? (new Post())->getPerPage(),
+            'perPage' => $perPage ?? config('pagination.per_page.default'),
             'search' => $search ?? '',
             'order' => $order ?? '',
             'title' => __('Posts'),
