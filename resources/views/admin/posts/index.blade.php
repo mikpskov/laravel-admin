@@ -8,9 +8,22 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">{{ $title }}</h5>
 
-                    <form method="get">
-                        <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
-                    </form>
+                    <div id="filters" class="row">
+                        <div class="col">
+                            <form method="get">
+                                <x-admin.input name="search" placeholder="{{ __('Search') }}" :value="$search"></x-admin.input>
+                            </form>
+                        </div>
+
+                        <div class="col">
+                            <x-admin.order :orders="[
+                                'id' => __('ID'),
+                                'title' => __('Title'),
+                                'created_at' => __('Create date'),
+                                'comments_count' => __('Comments count'),
+                            ]" :selected="$order"/>
+                        </div>
+                    </div>
 
                     @can('create', \App\Models\Post::class)
                         <a type="button" class="btn btn-primary" href="{{ $createUrl }}">{{ __('Add') }}</a>

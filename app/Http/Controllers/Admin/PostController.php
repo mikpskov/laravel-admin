@@ -26,8 +26,7 @@ final class PostController extends Controller
             ->withApprovedCommentsCount()
             ->withLikes(new User())
             ->withVotes(new User())
-            ->byUserId($request->get('user'))
-            ->latest();
+            ->byUserId($request->get('user'));
 
         if ($request->user()->cannot('posts.view_any')) {
             $items->byUserId($request->user()->getKey());
@@ -37,16 +36,24 @@ final class PostController extends Controller
             $items->where('title', 'like', "%$search%");
         }
 
-        $headers = ['id', 'user_id', 'title', 'published_at'];
+        if ($orders = $request->get('orders')) {
+            foreach ($orders as $column => $direction) {
+                if ($column === array_key_first($orders)) {
+                    $order = "{$column}_{$direction}";
+                }
+
+                $items->orderBy($column, $direction);
+            }
+        }
 
         $perPage = $request->cookie('posts_perPage');
 
         return view('admin.posts.index', [
-            'headers' => $headers,
-            'items' => $items->paginate($perPage, $headers)
+            'items' => $items->paginate($perPage)
                 ->appends($request->except('page')),
             'perPage' => $perPage ?? (new Post())->getPerPage(),
             'search' => $search ?? '',
+            'order' => $order ?? '',
             'title' => __('Posts'),
             'createUrl' => route('admin.posts.create'),
         ]);
