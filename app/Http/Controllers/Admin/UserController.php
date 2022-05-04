@@ -26,6 +26,16 @@ final class UserController extends Controller
         $users = User::query()
             ->withCount(['posts', 'comments']);
 
+        if ($orders = $request->get('orders')) {
+            foreach ($orders as $column => $direction) {
+                if ($column === array_key_first($orders)) {
+                    $order = "{$column}_{$direction}";
+                }
+
+                $users->orderBy($column, $direction);
+            }
+        }
+
         if ($search = $request->get('search')) {
             $users->where('name', 'like', "%$search%");
             $users->orWhere('email', 'like', "%$search%");
@@ -37,6 +47,7 @@ final class UserController extends Controller
             'items' => $users->paginate($perPage)->appends($request->except('page')),
             'perPage' => $perPage ?? (new User())->getPerPage(),
             'search' => $search ?? '',
+            'order' => $order ?? '',
             'title' => __('Users'),
             'createUrl' => route('admin.users.create'),
         ]);
