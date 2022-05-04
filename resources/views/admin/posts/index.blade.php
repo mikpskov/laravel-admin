@@ -42,6 +42,37 @@
                                     </a>
                                 </td>
 
+                                <td>
+                                    <a
+                                        href="{{ route('admin.comments.index', ['post' => $item->id]) }}"
+                                        title="{{ __('Comments') }}"
+                                        class="link-secondary text-decoration-none"
+                                    >
+                                        <i class="bi bi-chat-dots"></i>
+                                        {{ $item->comments_count ?: 0 }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <span
+                                        title="{{ __('Bookmarks') }}"
+                                        class="link-secondary text-decoration-none"
+                                    >
+                                        <i class="bi bi-bookmarks"></i>
+                                        {{ $item->likes_count ?: 0 }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span
+                                        title="{{ __('Votes') }}"
+                                        class="link-secondary text-decoration-none"
+                                    >
+                                        <i class="bi bi-star"></i>
+                                        {{ $item->votes_up_count - $item->votes_down_count }}
+                                    </span>
+                                </td>
+
                                 <td class="text-end actions-column">
                                     @canany(['update', 'publish', 'delete'], $item)
                                         <a

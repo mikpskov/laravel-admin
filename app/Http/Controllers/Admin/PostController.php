@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,6 +23,9 @@ final class PostController extends Controller
     public function index(Request $request): View
     {
         $items = Post::query()
+            ->withApprovedCommentsCount()
+            ->withLikes(new User())
+            ->withVotes(new User())
             ->byUserId($request->get('user'))
             ->latest();
 
