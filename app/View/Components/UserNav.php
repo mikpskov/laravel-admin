@@ -90,6 +90,11 @@ final class UserNav extends Component
             //     route('users.downvoted_comments', $this->user),
             //     $user?->can('downvoted', $this->user),
             // ),
+            new NavItem(
+                __('Notifications'),
+                route('users.notifications.index', $this->user),
+                $user?->can('notifications', $this->user),
+            ),
         ];
     }
 }

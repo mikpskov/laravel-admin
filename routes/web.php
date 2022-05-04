@@ -34,6 +34,16 @@ Route::prefix('users/{user}')->name('users.')->group(static function (): void {
     Route::get('upvoted/comments', [App\Http\Controllers\UserController::class, 'upvotedComments'])->name('upvoted_comments');
     Route::get('downvoted/{page?}', [App\Http\Controllers\UserController::class, 'downvotedPosts'])->name('downvoted_posts')->where('page', 'posts');
     Route::get('downvoted/comments', [App\Http\Controllers\UserController::class, 'downvotedComments'])->name('downvoted_comments');
+
+    Route::scopeBindings()
+        ->prefix('notifications')
+        ->name('notifications.')
+        ->middleware('auth')
+        ->controller(App\Http\Controllers\UserNotificationController::class)
+        ->group(static function (): void {
+            Route::get('', 'index')->name('index');
+            Route::delete('{notification}', 'destroy')->name('destroy');
+        });
 });
 
 Route::prefix('likes')->name('likes.')->middleware('auth')->group(static function (): void {
