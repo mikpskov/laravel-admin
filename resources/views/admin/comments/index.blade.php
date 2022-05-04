@@ -31,8 +31,24 @@
                         @foreach($items as $item)
                             <tr @if(!$item->isApproved()) class="table-secondary" @endif>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->user->name }}</td>
-                                <td>{{ $item->post->title }}</td>
+
+                                <td>
+                                    <a
+                                        href="{{ route('users.show', $item->user_id) }}"
+                                        class="text-decoration-none"
+                                    >
+                                        {{ $item->user->name }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a
+                                        href="{{ route('posts.show', ['post' => $item->post_id]) . "#comment-{$item->id}" }}"
+                                        class="text-decoration-none"
+                                    >
+                                        {{ $item->post->title }}
+                                    </a>
+                                </td>
 
                                 <td class="text-end actions-column">
                                     @canany(['approve', 'delete'], $item)

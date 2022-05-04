@@ -23,8 +23,24 @@
                         @foreach($items as $item)
                             <tr @if(!$item->isPublished()) class="table-secondary" @endif>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->user->name }}</td>
-                                <td>{{ $item->title }}</td>
+
+                                <td>
+                                    <a
+                                        href="{{ route('users.show', $item->user_id) }}"
+                                        class="text-decoration-none"
+                                    >
+                                        {{ $item->user->name }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a
+                                        href="{{ route('posts.show', $item) }}"
+                                        class="text-decoration-none"
+                                    >
+                                        {{ $item->title }}
+                                    </a>
+                                </td>
 
                                 <td class="text-end actions-column">
                                     @canany(['update', 'publish', 'delete'], $item)

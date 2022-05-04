@@ -36,7 +36,16 @@
                         @foreach($items as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->name }}</td>
+
+                                <td>
+                                    <a
+                                        href="{{ route('users.show', $item->id) }}"
+                                        class="text-decoration-none"
+                                    >
+                                        {{ $item->name }}
+                                    </a>
+                                </td>
+
                                 <td>{{ $item->email }}</td>
                                 <td><span title="{{ $item->created_at }}">{{ $item->created_at?->diffForHumans() }}</span></td>
 
