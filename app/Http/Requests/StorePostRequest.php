@@ -24,6 +24,9 @@ final class StorePostRequest extends FormRequest
                 'required',
                 'min: 5',
             ],
+            'tags' => [
+                'string',  // todo: custom rule
+            ],
         ];
     }
 }

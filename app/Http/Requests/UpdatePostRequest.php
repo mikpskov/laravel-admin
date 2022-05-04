@@ -22,6 +22,9 @@ final class UpdatePostRequest extends FormRequest
             'body' => [
                 'min: 5',
             ],
+            'tags' => [
+                'string',  // todo: custom rule
+            ],
         ];
     }
 }

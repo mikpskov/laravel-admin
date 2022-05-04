@@ -12,6 +12,16 @@ final class Tag extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'slug',
+        'name',
+        'order',
+    ];
+
+    protected $casts = [
+        'order' => 'integer',
+    ];
+
     // todo: trait HasOrder
     public function scopeOrdered(Builder $query): Builder
     {

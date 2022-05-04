@@ -68,7 +68,9 @@ final class PostController extends Controller
 
     public function store(StorePostRequest $request): RedirectResponse
     {
-        Post::create($request->validated());
+        $post = Post::create($data = $request->validated());
+
+        $post->syncTags($data['tags'] ?? '');
 
         return redirect()->route('admin.posts.index');
     }
@@ -87,7 +89,9 @@ final class PostController extends Controller
 
     public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
-        $post->update($request->validated());
+        $post->update($data = $request->validated());
+
+        $post->syncTags($data['tags'] ?? '');
 
         return redirect()->route('admin.posts.index');
     }

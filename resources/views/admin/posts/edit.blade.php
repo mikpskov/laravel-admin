@@ -19,6 +19,10 @@
                         </div>
 
                         <div class="mb-3">
+                            <x-admin.input name="tags" label="{{ __('Tags') }}" :value="$item?->tags->pluck('name')->implode(', ')"/>
+                        </div>
+
+                        <div class="mb-3">
                             <x-admin.textarea name="body" label="{{ __('Body') }}" :model="$item" rows="10"/>
                         </div>
                     </main>
