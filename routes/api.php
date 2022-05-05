@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::prefix('auth')
+    ->name('auth.')
+    ->controller(App\Http\Controllers\Api\AuthController::class)
+    ->group(static function (): void {
+        Route::get('', 'show')->name('show');
+        Route::post('', 'store')->name('store')->withoutMiddleware('auth:sanctum');
+        Route::delete('', 'destroy')->name('destroy');
+    });
