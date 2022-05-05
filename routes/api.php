@@ -22,3 +22,5 @@ Route::prefix('auth')
         Route::post('', 'store')->name('store')->withoutMiddleware('auth:sanctum');
         Route::delete('', 'destroy')->name('destroy');
     });
+
+Route::apiResource('users', App\Http\Controllers\Api\UserController::class);
