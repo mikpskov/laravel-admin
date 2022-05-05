@@ -21,7 +21,7 @@ final class UserSeeder extends Seeder
 
     public function run(): void
     {
-        $password = Hash::make('Test123!');
+        $passwordHash = Hash::make($password = 'Test123!');
 
         User::factory()
             ->createOne([
@@ -39,7 +39,7 @@ final class UserSeeder extends Seeder
                 'name' => $this->faker->name(),
                 'email' => $this->faker->unique()->safeEmail(),
                 'email_verified_at' => now(),
-                'password' => $password,
+                'password' => $passwordHash,
                 'remember_token' => Str::random(10),
                 'created_at' => $createdAt,
                 'updated_at' => $createdAt,
