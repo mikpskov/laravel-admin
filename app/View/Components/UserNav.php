@@ -52,42 +52,42 @@ final class UserNav extends Component
             ),
             new NavItem(
                 __('Posts'),
-                route('users.posts', $this->user),
+                route('users.posts.index', $this->user),
                 true,
             ),
             new NavItem(
                 __('Comments'),
-                route('users.comments', $this->user),
+                route('users.comments.index', $this->user),
                 true,
             ),
             new NavItem(
                 __('Saved'),
-                route('users.saved_posts', $this->user),
+                route('users.posts.saved', $this->user),
                 $user?->can('saved', $this->user),
             ),
             // new NavItem(
             //     __('Saved'),
-            //     route('users.saved_comments', $this->user),
+            //     route('users.comments.saved', $this->user),
             //     $user?->can('saved', $this->user),
             // ),
             new NavItem(
                 __('Upvoted'),
-                route('users.upvoted_posts', $this->user),
+                route('users.posts.upvoted', $this->user),
                 $user?->can('upvoted', $this->user),
             ),
             // new NavItem(
             //     __('Upvoted'),
-            //     route('users.upvoted_comments', $this->user),
+            //     route('users.comments.upvoted', $this->user),
             //     $user?->can('upvoted', $this->user),
             // ),
             new NavItem(
                 __('Downvoted'),
-                route('users.downvoted_posts', $this->user),
+                route('users.posts.downvoted', $this->user),
                 $user?->can('downvoted', $this->user),
             ),
             // new NavItem(
             //     __('Downvoted'),
-            //     route('users.downvoted_comments', $this->user),
+            //     route('users.comments.downvoted', $this->user),
             //     $user?->can('downvoted', $this->user),
             // ),
             new NavItem(
