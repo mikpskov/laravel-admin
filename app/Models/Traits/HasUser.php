@@ -15,10 +15,7 @@ trait HasUser
 {
     public static function bootHasUser()
     {
-        /** @var User $user */
-        if ($user = auth()->user()) {
-            self::creating(fn(self $model) => $model->user_id ??= $user->getKey());
-        }
+        self::creating(fn(self $model) => $model->user_id ??= auth()->user()?->getKey());
     }
 
     public function initializeHasUser(): void
@@ -26,14 +23,6 @@ trait HasUser
         $this->mergeCasts([
             $this->getUserIdColumn() => 'integer',
         ]);
-    }
-
-    protected static function booted(): void
-    {
-        /** @var User $user */
-        if ($user = auth()->user()) {
-            self::creating(fn(self $model) => $model->user_id ??= $user->id);
-        }
     }
 
     public function scopeByUserId(Builder $query, ?int $userId = null): Builder

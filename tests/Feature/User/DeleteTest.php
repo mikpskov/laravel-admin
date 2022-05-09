@@ -14,7 +14,7 @@ final class DeleteTest extends UserTestCase
     /** @test */
     public function it_deletes_user(): void
     {
-        $this->givePermission('users.delete');
+        $this->auth('users.delete');
 
         /** @var User $user */
         $user = User::factory()->create();

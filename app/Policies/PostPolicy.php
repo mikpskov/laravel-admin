@@ -17,6 +17,19 @@ final class PostPolicy
         return $user->canAny(['posts.view_any', 'posts.view_own']);
     }
 
+    public function view(User $user, Post $model): bool
+    {
+        if ($user->can('posts.view_any')) {
+            return true;
+        }
+
+        if ($user->can('posts.view_own')) {
+            return $user->getKey() === $model->user_id;
+        }
+
+        return $this->viewAny($user);
+    }
+
     public function create(User $user): bool
     {
         return $user->can('posts.create');
@@ -29,7 +42,7 @@ final class PostPolicy
         }
 
         if ($user->can('posts.update_own')) {
-            return $user->id === $model->user_id;
+            return $user->getKey() === $model->user_id;
         }
 
         return false;
@@ -42,7 +55,7 @@ final class PostPolicy
         }
 
         if ($user->can('posts.delete_own')) {
-            return $user->id === $model->user_id;
+            return $user->getKey() === $model->user_id;
         }
 
         return false;
@@ -55,7 +68,7 @@ final class PostPolicy
         }
 
         if ($user->can('posts.publish_own')) {
-            return $user->id === $model->user_id;
+            return $user->getKey() === $model->user_id;
         }
 
         return false;

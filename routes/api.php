@@ -24,3 +24,12 @@ Route::prefix('auth')
     });
 
 Route::apiResource('users', App\Http\Controllers\Api\UserController::class);
+
+Route::apiResource('posts', App\Http\Controllers\Api\PostController::class);
+Route::prefix('posts')
+    ->name('posts.')
+    ->controller(App\Http\Controllers\Api\PostController::class)
+    ->group(static function (): void {
+        Route::patch('{post}/publish', 'publish')->name('publish');
+        Route::delete('{post}/publish', 'unpublish')->name('unpublish');
+    });

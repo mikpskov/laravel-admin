@@ -16,7 +16,7 @@ final class IndexTest extends UserTestCase
     /** @test */
     public function it_shows_list_of_users(): void
     {
-        $this->givePermission('users.view_any');
+        $this->auth('users.view_any');
 
         User::factory($count = 9)->create();
 

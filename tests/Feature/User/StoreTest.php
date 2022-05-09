@@ -16,7 +16,7 @@ final class StoreTest extends UserTestCase
     /** @test */
     public function it_stores_user(): void
     {
-        $this->givePermission('users.create');
+        $this->auth('users.create');
 
         /** @var User $user */
         $user = User::factory()->make();
@@ -61,7 +61,7 @@ final class StoreTest extends UserTestCase
     /** @test */
     public function it_fails_store_user_without_required_fields(): void
     {
-        $this->givePermission('users.create');
+        $this->auth('users.create');
 
         $response = $this->postJson(route('api.users.store'), []);
 
@@ -79,7 +79,7 @@ final class StoreTest extends UserTestCase
     /** @test */
     public function it_fails_store_user_with_wrong_email(): void
     {
-        $this->givePermission('users.create');
+        $this->auth('users.create');
 
         $response = $this->postJson(route('api.users.store'), [
             'name' => 'John Doe',
@@ -99,7 +99,7 @@ final class StoreTest extends UserTestCase
     /** @test */
     public function it_fails_store_user_with_non_unique_email(): void
     {
-        $this->givePermission('users.create');
+        $this->auth('users.create');
 
         /** @var User $user */
         $user = User::factory()->create();

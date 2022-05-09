@@ -16,7 +16,7 @@ final class UpdateTest extends UserTestCase
     /** @test */
     public function it_updates_user(): void
     {
-        $this->givePermission('users.update');
+        $this->auth('users.update');
 
         /** @var User $user */
         $user = User::factory()->create();
@@ -42,7 +42,7 @@ final class UpdateTest extends UserTestCase
     /** @test */
     public function it_partial_updates_user(): void
     {
-        $this->givePermission('users.update');
+        $this->auth('users.update');
 
         /** @var User $user */
         $user = User::factory()->create();
@@ -79,7 +79,7 @@ final class UpdateTest extends UserTestCase
     /** @test */
     public function it_fails_update_user_with_non_unique_email(): void
     {
-        $this->givePermission('users.update');
+        $this->auth('users.update');
 
         /** @var User $user */
         $user1 = User::factory()->create();

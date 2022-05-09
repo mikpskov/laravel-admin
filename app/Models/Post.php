@@ -12,6 +12,7 @@ use App\Models\Traits\HasUser;
 use App\Models\Traits\HasVotes;
 use App\View\DropdownItem;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CarbonInterface|null $published_at
  * @property CarbonInterface $created_at
  * @property CarbonInterface $updated_at
+ * @property Collection $tags
  */
 final class Post extends Model
 {
@@ -33,10 +35,6 @@ final class Post extends Model
     use HasLikes;
     use HasVotes;
     use HasTags;
-
-    protected $with = [
-        'user',
-    ];
 
     protected $fillable = [
         'title',

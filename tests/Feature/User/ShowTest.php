@@ -16,7 +16,7 @@ final class ShowTest extends UserTestCase
     /** @test */
     public function it_shows_user(): void
     {
-        $this->givePermission('users.view');
+        $this->auth('users.view');
 
         /** @var User $user */
         $user = User::factory()->create();

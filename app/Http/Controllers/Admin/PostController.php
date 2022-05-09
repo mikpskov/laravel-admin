@@ -9,6 +9,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\User;
+use App\Services\Post\PostManager;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -66,11 +67,11 @@ final class PostController extends Controller
         ]);
     }
 
-    public function store(StorePostRequest $request): RedirectResponse
-    {
-        $post = Post::create($data = $request->validated());
-
-        $post->syncTags($data['tags'] ?? '');
+    public function store(
+        StorePostRequest $request,
+        PostManager $postManager,
+    ): RedirectResponse {
+        $postManager->store($request->validated());
 
         return redirect()->route('admin.posts.index');
     }
@@ -87,11 +88,12 @@ final class PostController extends Controller
         ]);
     }
 
-    public function update(UpdatePostRequest $request, Post $post): RedirectResponse
-    {
-        $post->update($data = $request->validated());
-
-        $post->syncTags($data['tags'] ?? '');
+    public function update(
+        UpdatePostRequest $request,
+        PostManager $postManager,
+        Post $post,
+    ): RedirectResponse {
+        $postManager->update($post, $request->validated());
 
         return redirect()->route('admin.posts.index');
     }
@@ -114,9 +116,11 @@ final class PostController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(Post $post): RedirectResponse
-    {
-        $post->delete();
+    public function destroy(
+        PostManager $postManager,
+        Post $post,
+    ): RedirectResponse {
+        $postManager->delete($post);
 
         return redirect()->back();
     }

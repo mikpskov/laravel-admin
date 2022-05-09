@@ -30,26 +30,11 @@ trait HasPublications
         return $this->{$this->getPublishedAtColumn()} !== null;
     }
 
-    public function publish(): bool
+    public function togglePublish(bool $isPublished): self
     {
-        $this->{$this->getPublishedAtColumn()} = now();
+        $this->{$this->getPublishedAtColumn()} = $isPublished ? now() : null;
 
-        if ($result = $this->save()) {
-            $this->fireModelEvent('published', false);
-        }
-
-        return $result;
-    }
-
-    public function unpublish(): bool
-    {
-        $this->{$this->getPublishedAtColumn()} = null;
-
-        if ($result = $this->save()) {
-            $this->fireModelEvent('unpublished', false);
-        }
-
-        return $result;
+        return $this;
     }
 
     public static function published(callable $callback): void
