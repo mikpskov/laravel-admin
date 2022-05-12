@@ -31,18 +31,22 @@ final class PostManager
         return $post;
     }
 
-    public function publish(Post $post): Post
+    public function publish(Post $post): bool
     {
-        $post->togglePublish(true)->save();
+        if ($post->isPublished()) {
+            return true;
+        }
 
-        return $post;
+        $post->published_at = now();
+
+        return $post->save();
     }
 
-    public function unpublish(Post $post): Post
+    public function unpublish(Post $post): bool
     {
-        $post->togglePublish(false)->save();
+        $post->published_at = null;
 
-        return $post;
+        return $post->save();
     }
 
     public function delete(Post $post): void
