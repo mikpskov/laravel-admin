@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Enums\ReactionType;
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -19,6 +20,9 @@ final class PostController extends Controller
             ->withApprovedCommentsCount()
             ->withLikes($request->user())
             ->withVotes($request->user())
+            ->withReactions(ReactionType::save)
+            ->withReactions(ReactionType::upvote)
+            ->withReactions(ReactionType::downvote)
             ->with('tags')
             ->byTag($request->get('tag'))
             ->published()

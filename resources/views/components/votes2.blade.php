@@ -4,8 +4,8 @@
     {{ $attributes->merge(['class' => 'flex items-center votes-block']) }}
 >
     @can('vote', $model)
-        <button title="{{ __('Vote up') }}" @class(['vote-button mr-2', 'active' => $model->reacted_upvote_count]) data-direction="1">
-            <x-icon.thumb-up :filled="$model->reacted_upvote_count"/>
+        <button title="{{ __('Vote up') }}" @class(['vote-button mr-2', 'active' => $model->voted_up]) data-direction="1">
+            <x-icon.thumb-up :filled="$model->voted_up"/>
         </button>
     @endcan
 
@@ -13,16 +13,16 @@
         class="votes-total-counter {{ $total >= 0 ? 'text-green-600' : 'text-red-600' }}"
         title="{{ __('Total votes :count: ↑:up and ↓:down', [
             'count' => $count,
-            'up' => $model->reactions_upvote_count,
-            'down' => $model->reactions_downvote_count,
+            'up' => $model->votes_up_count,
+            'down' => $model->votes_down_count,
         ]) }}"
     >
         @if($total >= 0)+@endif{{ $total }}
     </span>
 
     @can('vote', $model)
-        <button title="{{ __('Vote down') }}" @class(['vote-button ml-2', 'active' => $model->reacted_downvote_count]) data-direction="0">
-            <x-icon.thumb-down :filled="$model->reacted_downvote_count"/>
+        <button title="{{ __('Vote down') }}" @class(['vote-button ml-2', 'active' => $model->voted_down]) data-direction="0">
+            <x-icon.thumb-down :filled="$model->voted_down"/>
         </button>
     @endcan
 </div>

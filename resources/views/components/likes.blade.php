@@ -1,18 +1,18 @@
-<div {{ $attributes->merge(['class' => 'likes-block']) }}>
+<div {{ $attributes->merge(['class' => 'reactions-block']) }}>
     @guest
         <a href="{{ route('login') }}" class="flex items-center" title="{{ __('Likes') }}">
             <x-icon.bookmark class="mr-2"/>
-            <span class="like-counter">{{ $model->likes_count }}</span>
+            <span class="reaction-counter">{{ $model->reactions_save_count }}</span>
         </a>
     @else
         <button
             title="{{ __('Likes') }}"
             data-type="{{ $type }}"
             data-id="{{ $model->getKey() }}"
-            @class(['flex items-center like-button', 'active' => $model->liked])
+            @class(['flex items-center reaction-button', 'active' => $model->reacted_save])
         >
-            <x-icon.bookmark class="mr-2" filled="{{ $model->liked }}"/>
-            <span class="like-counter">{{ $model->likes_count }}</span>
+            <x-icon.bookmark class="mr-2" filled="{{ $model->reacted_save }}"/>
+            <span class="reaction-counter">{{ $model->reactions_save_count }}</span>
         </button>
     @endguest
 </div>
@@ -20,27 +20,25 @@
 @pushOnce('scripts')
 <script>
 (() => {
-    document.querySelectorAll('.like-button').forEach(element => {
+    document.querySelectorAll('.reaction-button').forEach(element => {
         element.addEventListener('click', event => {
-            like(event.target.closest('button'))
+            addReaction(event.target.closest('button'))
         })
     })
 })()
 
-function like(likeButton) {
-    const resourceType = likeButton.dataset.type
-    const resourceId = likeButton.dataset.id
-    const likeCounter = likeButton.querySelector('.like-counter')
-    const likeIcon = likeButton.querySelector('svg')
+function addReaction(button) {
+    const counter = button.querySelector('.reaction-counter')
+    const icon = button.querySelector('svg')
 
     axios({
-        method: likeButton.classList.contains('active') ? 'delete' : 'post',
-        url: `/likes/${resourceType}/${resourceId}`,
+        method: button.classList.contains('active') ? 'delete' : 'post',
+        url: `/reactions/${button.dataset.type}/${button.dataset.id}/save`,
     })
         .then(response => {
-            likeButton.classList.toggle("active", response.data.data.liked);
-            likeCounter.innerHTML = response.data.data.likesCount
-            likeIcon.style.fill = response.data.data.liked ? 'currentColor' : 'none';
+            button.classList.toggle("active", response.data.data.reacted);
+            counter.innerHTML = response.data.data.reactions_count
+            icon.style.fill = response.data.data.reacted ? 'currentColor' : 'none';
         })
         .catch(error => {
             alert(error)

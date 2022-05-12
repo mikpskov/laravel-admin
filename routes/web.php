@@ -68,4 +68,9 @@ Route::prefix('votes')->name('votes.')->middleware('auth')->group(static functio
     Route::delete('{type}/{id}', [App\Http\Controllers\VoteController::class, 'destroy'])->name('destroy');
 });
 
+Route::prefix('reactions')->name('reactions.')->middleware('auth')->group(static function (): void {
+    Route::post('{reactable_type}/{reactable_id}/{reaction_type}', [App\Http\Controllers\ReactionController::class, 'store'])->name('store');
+    Route::delete('{reactable_type}/{reactable_id}/{reaction_type}', [App\Http\Controllers\ReactionController::class, 'destroy'])->name('destroy');
+});
+
 Auth::routes();

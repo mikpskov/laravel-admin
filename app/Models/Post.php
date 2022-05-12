@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasPublications;
+use App\Models\Traits\HasReactions;
 use App\Models\Traits\HasTags;
 use App\Models\Traits\HasUser;
 use App\Models\Traits\HasVotes;
@@ -35,6 +36,7 @@ final class Post extends Model
     use HasLikes;
     use HasVotes;
     use HasTags;
+    use HasReactions;
 
     protected $fillable = [
         'title',
